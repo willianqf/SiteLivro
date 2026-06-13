@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071014">
+  <meta name="robots" content="index,follow">
+  <title>Prévia do livro | Willian Quirino</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/reader.css">
+</head>
+<body class="reader-body">
+  <div class="reader-backdrop" data-reader-backdrop aria-hidden="true"></div>
+
+  <header class="reader-header">
+    <a class="reader-back-link" href="index.html#livros">
+      <span aria-hidden="true">←</span>
+      Voltar ao site
+    </a>
+    <div class="reader-book-name">
+      <span>Prévia gratuita</span>
+      <strong data-reader-title>Carregando livro...</strong>
+    </div>
+    <a class="reader-buy-link" data-reader-buy href="#" target="_blank" rel="noopener noreferrer">
+      Comprar livro <span aria-hidden="true">↗</span>
+    </a>
+  </header>
+
+  <main class="reader-main">
+    <section class="reader-intro" aria-labelledby="reader-heading">
+      <p data-reader-label>Primeiro capítulo</p>
+      <h1 id="reader-heading" data-reader-heading>Carregando...</h1>
+      <span data-reader-word-count></span>
+    </section>
+
+    <div class="reader-stage" data-reader-stage aria-live="polite">
+      <div class="reader-book" data-reader-book>
+        <article class="reader-page reader-page-left" data-reader-page-left></article>
+        <div class="reader-spine" aria-hidden="true"></div>
+        <article class="reader-page reader-page-right" data-reader-page-right></article>
+      </div>
+
+      <div class="reader-measure" data-reader-measure aria-hidden="true"></div>
+    </div>
+
+    <div class="reader-controls">
+      <button class="reader-control" type="button" data-reader-prev aria-label="Página anterior">
+        <span aria-hidden="true">←</span>
+        <span>Anterior</span>
+      </button>
+
+      <div class="reader-progress">
+        <span data-reader-page-label>Página 1</span>
+        <div class="reader-progress-track" aria-hidden="true">
+          <span data-reader-progress></span>
+        </div>
+        <small>Use as setas do teclado ou deslize a página</small>
+      </div>
+
+      <button class="reader-control" type="button" data-reader-next aria-label="Próxima página">
+        <span>Próxima</span>
+        <span aria-hidden="true">→</span>
+      </button>
+    </div>
+  </main>
+
+  <noscript>
+    <p class="reader-error">Ative o JavaScript para abrir a prévia do livro.</p>
+  </noscript>
+
+  <script src="assets/preview-data.js"></script>
+  <script src="assets/reader.js"></script>
+</body>
+</html>

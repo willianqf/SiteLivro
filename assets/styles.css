@@ -609,6 +609,50 @@ button {
   text-transform: uppercase;
 }
 
+.preview-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  padding: 0 15px;
+  margin: 0 0 18px;
+  border: 1px solid rgba(123, 214, 238, 0.28);
+  color: #dffaff;
+  background: rgba(39, 139, 179, 0.08);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease;
+}
+
+.preview-link:hover {
+  border-color: var(--ice);
+  background: rgba(39, 139, 179, 0.18);
+}
+
+.book-card-terra .preview-link {
+  border-color: rgba(137, 185, 167, 0.28);
+  color: #d9f0e7;
+  background: rgba(79, 144, 120, 0.08);
+}
+
+.book-card-terra .preview-link:hover {
+  border-color: var(--green);
+  background: rgba(79, 144, 120, 0.18);
+}
+
+.book-card-veter .preview-link {
+  border-color: rgba(230, 182, 92, 0.28);
+  color: #fff0c9;
+  background: rgba(172, 107, 19, 0.08);
+}
+
+.book-card-veter .preview-link:hover {
+  border-color: var(--gold);
+  background: rgba(172, 107, 19, 0.18);
+}
+
 .book-actions {
   display: flex;
   align-items: center;
@@ -768,6 +812,23 @@ button {
   flex-wrap: wrap;
   gap: 8px;
   margin: 28px 0 34px;
+}
+
+.feature-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 11px;
+}
+
+.button-preview {
+  border-color: rgba(255, 255, 255, 0.34);
+  color: #fff;
+  background: rgba(3, 9, 11, 0.48);
+}
+
+.button-preview:hover {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .button-terra {
@@ -1575,6 +1636,16 @@ button {
 
   .book-actions {
     gap: 18px;
+  }
+
+  .feature-actions {
+    display: grid;
+    width: min(100%, 330px);
+    grid-template-columns: 1fr;
+  }
+
+  .feature-actions .button {
+    width: 100%;
   }
 
   .book-feature,
