@@ -853,6 +853,10 @@ button {
     left: 0;
   }
 
+  .reader-turn.is-prev .reader-turn-front {
+    transform-origin: left center;
+  }
+
   .reader-turn-back {
     display: none;
   }

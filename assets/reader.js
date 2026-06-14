@@ -325,8 +325,14 @@ const preparePageTurn = (direction, nextIndex) => {
     `reader-page reader-turn-face reader-turn-back ${movingForward ? "reader-page-left" : "reader-page-right"}`;
 
   if (isMobile) {
-    renderPage(pages[nextIndex], elements.rightPage);
-    renderPage(pages[currentIndex], elements.turnFront);
+    renderPage(
+      movingForward ? pages[nextIndex] : pages[currentIndex],
+      elements.rightPage
+    );
+    renderPage(
+      movingForward ? pages[currentIndex] : pages[nextIndex],
+      elements.turnFront
+    );
     renderPage(null, elements.turnBack);
     return;
   }
@@ -355,7 +361,9 @@ const setTurnProgress = (progress) => {
   const movingForward = activeTurn.direction > 0;
 
   if (isMobile) {
-    const frontAngle = normalized * 90 * (movingForward ? -1 : 1);
+    const frontAngle = movingForward
+      ? normalized * -90
+      : (1 - normalized) * -90;
     const frontShadow = Math.sin(normalized * Math.PI) * 0.44;
 
     activeTurn.progress = normalized;
