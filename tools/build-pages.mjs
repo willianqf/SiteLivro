@@ -238,7 +238,7 @@ const footer = (prefix = "../") => `
       <p class="copyright">© <span data-year></span> Willian Quirino.</p>
     </div>
   </footer>
-  <script src="${prefix}assets/script.js"></script>`;
+  <script src="${prefix}assets/script.js?v=20260614-2"></script>`;
 
 const breadcrumbs = (items) => jsonLd({
   "@context": "https://schema.org",

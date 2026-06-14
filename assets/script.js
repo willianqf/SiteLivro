@@ -45,15 +45,27 @@ const revealElements = document.querySelectorAll(".reveal");
 });
 
 if ("IntersectionObserver" in window && !prefersReducedMotion.matches) {
+  const revealImmediately = (element) => {
+    const bounds = element.getBoundingClientRect();
+    const activationBuffer = Math.min(window.innerHeight * 0.12, 120);
+    const isNearViewport =
+      bounds.bottom >= 0 && bounds.top <= window.innerHeight + activationBuffer;
+
+    if (isNearViewport) element.classList.add("is-visible");
+    return isNearViewport;
+  };
+
   const revealObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
       entry.target.classList.add("is-visible");
       observer.unobserve(entry.target);
     });
-  }, { threshold: 0.15, rootMargin: "0px 0px -8%" });
+  }, { threshold: 0.01, rootMargin: "0px 0px 12% 0px" });
 
-  revealElements.forEach((element) => revealObserver.observe(element));
+  revealElements.forEach((element) => {
+    if (!revealImmediately(element)) revealObserver.observe(element);
+  });
 } else {
   revealElements.forEach((element) => element.classList.add("is-visible"));
 }
