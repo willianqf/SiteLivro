@@ -21,6 +21,9 @@ const elements = {
   book: document.querySelector("[data-reader-book]"),
   leftPage: document.querySelector("[data-reader-page-left]"),
   rightPage: document.querySelector("[data-reader-page-right]"),
+  turn: document.querySelector("[data-reader-turn]"),
+  turnFront: document.querySelector("[data-reader-turn-front]"),
+  turnBack: document.querySelector("[data-reader-turn-back]"),
   measure: document.querySelector("[data-reader-measure]"),
   previous: document.querySelector("[data-reader-prev]"),
   next: document.querySelector("[data-reader-next]"),
@@ -42,6 +45,7 @@ let currentIndex = 0;
 let isAnimating = false;
 let isMobile = window.matchMedia("(max-width: 700px)").matches;
 let resizeTimer;
+let turnFallbackTimer;
 let touchStartX = 0;
 const playbackRates = [1, 1.25, 1.5, 0.75];
 let playbackRateIndex = 0;
@@ -306,6 +310,40 @@ const renderSpread = () => {
   elements.next.disabled = currentIndex + spreadStep() >= pages.length;
 };
 
+const preparePageTurn = (direction, nextIndex) => {
+  const movingForward = direction > 0;
+  const currentLeft = pages[currentIndex];
+  const currentRight = pages[currentIndex + 1];
+  const nextLeft = pages[nextIndex];
+  const nextRight = pages[nextIndex + 1];
+
+  elements.turn.className = `reader-turn ${movingForward ? "is-next" : "is-prev"}`;
+  elements.turnFront.className =
+    `reader-page reader-turn-face reader-turn-front ${movingForward ? "reader-page-right" : "reader-page-left"}`;
+  elements.turnBack.className =
+    `reader-page reader-turn-face reader-turn-back ${movingForward ? "reader-page-left" : "reader-page-right"}`;
+
+  if (isMobile) {
+    renderPage(pages[nextIndex], elements.rightPage);
+    renderPage(pages[currentIndex], elements.turnFront);
+    renderPage(pages[nextIndex], elements.turnBack);
+    return;
+  }
+
+  if (movingForward) {
+    renderPage(currentLeft, elements.leftPage);
+    renderPage(nextRight, elements.rightPage);
+    renderPage(currentRight, elements.turnFront);
+    renderPage(nextLeft, elements.turnBack);
+    return;
+  }
+
+  renderPage(nextLeft, elements.leftPage);
+  renderPage(currentRight, elements.rightPage);
+  renderPage(currentLeft, elements.turnFront);
+  renderPage(nextRight, elements.turnBack);
+};
+
 const turnPages = (direction) => {
   if (isAnimating) return;
   const step = spreadStep();
@@ -313,14 +351,36 @@ const turnPages = (direction) => {
   if (nextIndex < 0 || nextIndex >= pages.length) return;
 
   isAnimating = true;
-  elements.book.classList.add(direction > 0 ? "turning-next" : "turning-prev");
+  elements.previous.disabled = true;
+  elements.next.disabled = true;
+  preparePageTurn(direction, nextIndex);
+  elements.book.classList.add("is-turning");
 
-  window.setTimeout(() => {
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
+      elements.turn.classList.add("is-active");
+    });
+  });
+
+  const finishTurn = () => {
+    if (!isAnimating) return;
+    window.clearTimeout(turnFallbackTimer);
+    elements.turnBack.removeEventListener("animationend", handleTurnEnd);
     currentIndex = nextIndex;
     renderSpread();
-    elements.book.classList.remove("turning-next", "turning-prev");
+    elements.book.classList.remove("is-turning");
+    elements.turn.className = "reader-turn";
+    elements.turnFront.innerHTML = "";
+    elements.turnBack.innerHTML = "";
     isAnimating = false;
-  }, 460);
+  };
+
+  const handleTurnEnd = (event) => {
+    if (event.target === elements.turnBack) finishTurn();
+  };
+
+  elements.turnBack.addEventListener("animationend", handleTurnEnd);
+  turnFallbackTimer = window.setTimeout(finishTurn, 1000);
 };
 
 const initialize = () => {
