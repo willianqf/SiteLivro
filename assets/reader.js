@@ -353,6 +353,26 @@ const setTurnProgress = (progress) => {
 
   const normalized = clamp(progress, 0, 1);
   const movingForward = activeTurn.direction > 0;
+
+  if (isMobile) {
+    const frontAngle = normalized * 90 * (movingForward ? -1 : 1);
+    const frontShadow = Math.sin(normalized * Math.PI) * 0.44;
+
+    activeTurn.progress = normalized;
+    elements.turn.style.setProperty("--turn-progress", String(normalized));
+    elements.turnFront.style.opacity = "1";
+    elements.turnFront.style.transform = `rotateY(${frontAngle}deg)`;
+    elements.turnFront.style.filter =
+      `drop-shadow(${movingForward ? -1 : 1}rem 1rem 1.4rem rgba(0, 0, 0, ${frontShadow}))`;
+    elements.turnBack.style.display = "none";
+    elements.turn.style.setProperty(
+      "--front-shadow-opacity",
+      String(Math.sin(normalized * Math.PI) * 0.9)
+    );
+    elements.turn.style.setProperty("--back-shadow-opacity", "0");
+    return;
+  }
+
   const frontProgress = Math.min(normalized * 2, 1);
   const backProgress = Math.max((normalized - 0.5) * 2, 0);
   const frontAngle = frontProgress * 90 * (movingForward ? -1 : 1);

@@ -853,6 +853,10 @@ button {
     left: 0;
   }
 
+  .reader-turn-back {
+    display: none;
+  }
+
   .reader-book > .reader-page-left,
   .reader-spine {
     display: none;
