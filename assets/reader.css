@@ -770,6 +770,101 @@ button {
   text-align: center;
 }
 
+.chapter-transcript {
+  width: min(100%, 820px);
+  padding: 70px clamp(25px, 6vw, 72px);
+  margin: 95px auto 40px;
+  color: var(--reader-text);
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.035), transparent 8%),
+    var(--reader-paper);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
+}
+
+.chapter-transcript-heading {
+  padding-bottom: 35px;
+  margin-bottom: 38px;
+  border-bottom: 1px solid rgba(20, 30, 34, 0.18);
+  text-align: center;
+}
+
+.chapter-transcript-heading > p {
+  margin: 0;
+  color: color-mix(in srgb, var(--reader-accent) 62%, #172125);
+  font-size: 0.64rem;
+  font-weight: 750;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.chapter-transcript-heading h2 {
+  margin: 8px 0 12px;
+  font-family: var(--reader-font);
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.chapter-transcript-heading span {
+  color: rgba(23, 33, 37, 0.65);
+  font-size: 0.78rem;
+}
+
+.chapter-transcript-copy {
+  font-family: var(--reader-font);
+  font-size: 1.03rem;
+  line-height: 1.78;
+}
+
+.chapter-transcript-copy p {
+  margin: 0 0 1.15em;
+  text-indent: 1.7em;
+}
+
+.chapter-transcript-copy h2 {
+  margin: 1.8em 0 0.8em;
+  font-size: 1.6rem;
+  font-weight: 400;
+  text-align: center;
+}
+
+.chapter-divider {
+  width: 90px;
+  margin: 2.7em auto;
+  border: 0;
+  border-top: 1px solid rgba(23, 33, 37, 0.28);
+}
+
+.chapter-purchase {
+  display: grid;
+  padding-top: 42px;
+  margin-top: 52px;
+  border-top: 1px solid rgba(20, 30, 34, 0.2);
+  justify-items: center;
+  gap: 15px;
+  text-align: center;
+}
+
+.chapter-purchase p {
+  margin: 0 0 5px;
+  font-family: var(--reader-font);
+  font-size: 1.45rem;
+}
+
+.chapter-purchase a {
+  padding: 12px 16px;
+  border: 1px solid rgba(20, 30, 34, 0.28);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.chapter-purchase a:first-of-type {
+  color: #fff;
+  background: var(--reader-text);
+}
+
 @media (max-width: 920px) {
   .reader-body {
     --page-width: min(47vw, 430px);
@@ -794,11 +889,40 @@ button {
   }
 
   .reader-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
     padding-inline: 14px;
+    gap: 8px;
+    overflow: hidden;
+  }
+
+  .reader-back-link {
+    min-width: 0;
+    flex: 1 1 auto;
   }
 
   .reader-buy-link {
+    position: absolute;
+    right: 14px;
+    flex: 0 0 auto;
+    max-width: 92px;
     padding: 9px 10px;
+    overflow: hidden;
+    font-size: 0.6rem;
+    white-space: nowrap;
+  }
+
+  .reader-buy-link {
+    font-size: 0;
+  }
+
+  .reader-buy-link::before {
+    content: "Comprar";
+    font-size: 0.6rem;
+  }
+
+  .reader-buy-link span {
     font-size: 0.6rem;
   }
 
@@ -900,6 +1024,17 @@ button {
 
   .reader-progress small {
     display: none;
+  }
+
+  .chapter-transcript {
+    width: calc(100% - 24px);
+    padding: 45px 24px;
+    margin-top: 70px;
+  }
+
+  .chapter-transcript-copy {
+    font-size: 0.95rem;
+    line-height: 1.68;
   }
 }
 

@@ -10,6 +10,25 @@ Arquivos principais:
 - assets/styles.css: aparência e responsividade.
 - assets/script.js: menu, animações e galeria.
 - assets/images/: capas, retrato e ilustrações otimizadas.
+- a-terra-dos-monstros/: página e prévia indexável do livro.
+- elemental/: página e prévia indexável do livro.
+- veter/: página e prévia indexável do livro.
+- autor/: página dedicada ao autor.
+- trilhas/: página dedicada às trilhas sonoras.
+- sitemap.xml e robots.txt: arquivos de descoberta para buscadores.
+- tools/build-pages.mjs: gera novamente as páginas internas a partir dos
+  dados de assets/preview-data.js.
+
+SEO E DESEMPENHO
+----------------
+
+- Todas as páginas principais possuem título, descrição, canonical,
+  Open Graph, Twitter Card e dados estruturados JSON-LD.
+- Os primeiros capítulos estão presentes como HTML indexável, além do
+  leitor animado.
+- As imagens exibidas utilizam WebP e as galerias possuem versões
+  responsivas de 640 e 960 pixels.
+- Os JPG originais foram mantidos para compatibilidade e compartilhamento.
 
 Links de compra utilizados:
 - A Terra dos Monstros:

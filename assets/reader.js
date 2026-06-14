@@ -1,10 +1,14 @@
 const previews = window.BOOK_PREVIEWS || {};
 const params = new URLSearchParams(window.location.search);
-const requestedBook = params.get("livro") || "terra";
+const basePath = document.body.dataset.base || "";
+const requestedBook = document.body.dataset.book || params.get("livro") || "terra";
 const book = previews[requestedBook] || previews.terra;
+const assetUrl = (value) =>
+  `${basePath}${value.replace(/\.jpg$/i, ".webp")}`;
+const siteReturnUrl = document.body.dataset.return || "index.html#livros";
 const audiobooks = {
   terra: {
-    src: "assets/audio/terra-dos-monstros-capitulo-1.m4a",
+    src: assetUrl("assets/audio/terra-dos-monstros-capitulo-1.m4a"),
     title: "Um dia de cada vez",
   },
 };
@@ -166,8 +170,8 @@ const buildPages = () => {
 const renderSpecialPage = (page, target) => {
   if (page.type === "cover") {
     target.innerHTML = `
-      <div class="reader-cover" style="--page-art:url('${page.art}')">
-        <img src="${page.cover}" alt="Capa de ${book.title}">
+      <div class="reader-cover" style="--page-art:url('${assetUrl(page.art)}')">
+        <img src="${assetUrl(page.cover)}" alt="Capa de ${book.title}">
       </div>
     `;
     return;
@@ -175,7 +179,7 @@ const renderSpecialPage = (page, target) => {
 
   if (page.type === "opener") {
     target.innerHTML = `
-      <div class="reader-opener" style="--page-art:url('${page.art}')">
+      <div class="reader-opener" style="--page-art:url('${assetUrl(page.art)}')">
         <div>
           <span>${book.chapterLabel}</span>
           <h2>${book.chapterTitle}</h2>
@@ -187,7 +191,7 @@ const renderSpecialPage = (page, target) => {
   }
 
   target.innerHTML = `
-    <div class="reader-ending" style="--page-art:url('${page.art}')">
+    <div class="reader-ending" style="--page-art:url('${assetUrl(page.art)}')">
       <div>
         <span>A história continua...</span>
         <h2>Você chegou ao fim da prévia</h2>
@@ -195,7 +199,7 @@ const renderSpecialPage = (page, target) => {
         <a href="${book.buyUrl}" target="_blank" rel="noopener noreferrer">
           Adquirir o livro na UICLAP <span aria-hidden="true">↗</span>
         </a>
-        <a class="reader-site-return" href="index.html#livros">Voltar aos livros</a>
+        <a class="reader-site-return" href="${siteReturnUrl}">Voltar ao livro</a>
       </div>
     </div>
   `;
@@ -566,7 +570,7 @@ const initialize = () => {
   document.title = `${book.chapterTitle} | ${book.shortTitle}`;
   elements.body.classList.add(`theme-${book.theme}`);
   elements.body.style.setProperty("--reader-font", book.font);
-  elements.backdrop.style.backgroundImage = `url("${book.art}")`;
+  elements.backdrop.style.backgroundImage = `url("${assetUrl(book.art)}")`;
   elements.title.textContent = book.title;
   elements.heading.textContent = book.chapterTitle;
   elements.label.textContent = book.chapterLabel;
