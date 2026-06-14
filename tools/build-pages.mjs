@@ -298,7 +298,7 @@ ${head({
   description: `Leia gratuitamente ${preview.chapterTitle}, uma prévia do livro ${book.title}, de Willian Quirino.`,
   canonical,
   image,
-  css: "../../assets/reader.css",
+  css: "../../assets/reader.css?v=20260614-2",
   favicon: "../../assets/favicon.svg",
   structuredData: [{
     "@context": "https://schema.org",
@@ -346,21 +346,28 @@ ${head({
       </div>
     </section>
 
-    <article class="chapter-transcript" aria-labelledby="transcript-title">
-      <div class="chapter-transcript-heading">
-        <p>Modo texto</p>
-        <h2 id="transcript-title">${preview.chapterTitle}</h2>
-        <span>O primeiro capítulo também está disponível abaixo em formato acessível e indexável.</span>
-      </div>
-      <div class="chapter-transcript-copy">
-        ${preview.paragraphs.map(paragraphHtml).join("\n        ")}
-      </div>
-      <aside class="chapter-purchase">
-        <p>A história continua no livro completo.</p>
-        <a href="${book.buyUrl}" target="_blank" rel="noopener noreferrer">Adquirir ${displayTitle} na UICLAP <span aria-hidden="true">↗</span></a>
-        <a href="../">Voltar à página do livro</a>
-      </aside>
-    </article>
+    <details class="chapter-transcript">
+      <summary>
+        <span>Leitura alternativa</span>
+        <strong>Ler o capítulo em modo texto</strong>
+        <small>Abra somente se preferir a leitura contínua, sem animação de páginas.</small>
+      </summary>
+      <article class="chapter-transcript-content" aria-labelledby="transcript-title">
+        <div class="chapter-transcript-heading">
+          <p>Modo texto</p>
+          <h2 id="transcript-title">${preview.chapterTitle}</h2>
+          <span>Versão acessível do mesmo capítulo apresentado no leitor acima.</span>
+        </div>
+        <div class="chapter-transcript-copy">
+          ${preview.paragraphs.map(paragraphHtml).join("\n        ")}
+        </div>
+        <aside class="chapter-purchase">
+          <p>A história continua no livro completo.</p>
+          <a href="${book.buyUrl}" target="_blank" rel="noopener noreferrer">Adquirir ${displayTitle} na UICLAP <span aria-hidden="true">↗</span></a>
+          <a href="../">Voltar à página do livro</a>
+        </aside>
+      </article>
+    </details>
   </main>
   <script src="../../assets/preview-data.js"></script>
   <script src="../../assets/reader.js"></script>
