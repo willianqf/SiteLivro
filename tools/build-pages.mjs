@@ -390,7 +390,7 @@ ${head({
     : `Leia gratuitamente ${preview.chapterTitle}, uma prévia do livro ${book.title}, de Willian Quirino.`,
   canonical,
   image,
-  css: "../../assets/reader.css?v=20260614-3",
+  css: "../../assets/reader.css?v=20260614-2",
   favicon: "../../assets/favicon.svg",
   structuredData: [{
     "@context": "https://schema.org",
@@ -464,7 +464,7 @@ ${head({
     </details>
   </main>
   <script src="../../assets/preview-data.js"></script>
-  <script src="../../assets/reader.js?v=20260614-2"></script>
+  <script src="../../assets/reader.js"></script>
 </body>
 </html>`;
 };
