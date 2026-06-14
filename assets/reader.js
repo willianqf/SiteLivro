@@ -45,8 +45,9 @@ let currentIndex = 0;
 let isAnimating = false;
 let isMobile = window.matchMedia("(max-width: 700px)").matches;
 let resizeTimer;
-let turnFallbackTimer;
-let touchStartX = 0;
+let activeTurn = null;
+let dragState = null;
+let turnAnimationFrame = 0;
 const playbackRates = [1, 1.25, 1.5, 0.75];
 let playbackRateIndex = 0;
 
@@ -344,43 +345,187 @@ const preparePageTurn = (direction, nextIndex) => {
   renderPage(nextRight, elements.turnBack);
 };
 
-const turnPages = (direction) => {
-  if (isAnimating) return;
+const clamp = (value, minimum, maximum) =>
+  Math.min(maximum, Math.max(minimum, value));
+
+const setTurnProgress = (progress) => {
+  if (!activeTurn) return;
+
+  const normalized = clamp(progress, 0, 1);
+  const movingForward = activeTurn.direction > 0;
+  const frontProgress = Math.min(normalized * 2, 1);
+  const backProgress = Math.max((normalized - 0.5) * 2, 0);
+  const frontAngle = frontProgress * 90 * (movingForward ? -1 : 1);
+  const backAngle = (1 - backProgress) * 90 * (movingForward ? 1 : -1);
+  const frontShadow = Math.sin(frontProgress * Math.PI) * 0.44;
+  const backShadow = Math.sin((1 - backProgress) * Math.PI) * 0.38;
+
+  activeTurn.progress = normalized;
+  elements.turn.style.setProperty("--turn-progress", String(normalized));
+  elements.turnFront.style.opacity = normalized < 0.5 ? "1" : "0";
+  elements.turnFront.style.transform = `rotateY(${frontAngle}deg)`;
+  elements.turnFront.style.filter =
+    `drop-shadow(${movingForward ? -1 : 1}rem 1rem 1.4rem rgba(0, 0, 0, ${frontShadow}))`;
+  elements.turnBack.style.opacity = normalized >= 0.5 ? "1" : "0";
+  elements.turnBack.style.transform = `rotateY(${backAngle}deg)`;
+  elements.turnBack.style.filter =
+    `drop-shadow(${movingForward ? 1 : -1}rem 1rem 1.4rem rgba(0, 0, 0, ${backShadow}))`;
+  elements.turn.style.setProperty(
+    "--front-shadow-opacity",
+    String(Math.sin(frontProgress * Math.PI) * 0.9)
+  );
+  elements.turn.style.setProperty(
+    "--back-shadow-opacity",
+    String(Math.sin(backProgress * Math.PI) * 0.72)
+  );
+};
+
+const beginTurn = (direction) => {
+  if (isAnimating || activeTurn) return false;
   const step = spreadStep();
   const nextIndex = currentIndex + direction * step;
-  if (nextIndex < 0 || nextIndex >= pages.length) return;
+  if (nextIndex < 0 || nextIndex >= pages.length) return false;
 
   isAnimating = true;
   elements.previous.disabled = true;
   elements.next.disabled = true;
   preparePageTurn(direction, nextIndex);
   elements.book.classList.add("is-turning");
+  elements.turn.classList.add("is-active");
+  activeTurn = { direction, nextIndex, progress: 0 };
+  setTurnProgress(0);
+  return true;
+};
 
-  window.requestAnimationFrame(() => {
-    window.requestAnimationFrame(() => {
-      elements.turn.classList.add("is-active");
-    });
-  });
+const finishTurn = (commit) => {
+  if (!activeTurn) return;
+  window.cancelAnimationFrame(turnAnimationFrame);
+  if (commit) {
+    currentIndex = activeTurn.nextIndex;
+  }
+  activeTurn = null;
+  dragState = null;
+  elements.book.classList.remove("is-turning", "is-dragging");
+  elements.turn.className = "reader-turn";
+  elements.turn.removeAttribute("style");
+  elements.turnFront.removeAttribute("style");
+  elements.turnBack.removeAttribute("style");
+  elements.turnFront.innerHTML = "";
+  elements.turnBack.innerHTML = "";
+  isAnimating = false;
+  renderSpread();
+};
 
-  const finishTurn = () => {
-    if (!isAnimating) return;
-    window.clearTimeout(turnFallbackTimer);
-    elements.turnBack.removeEventListener("animationend", handleTurnEnd);
-    currentIndex = nextIndex;
-    renderSpread();
-    elements.book.classList.remove("is-turning");
-    elements.turn.className = "reader-turn";
-    elements.turnFront.innerHTML = "";
-    elements.turnBack.innerHTML = "";
-    isAnimating = false;
+const animateTurnTo = (target, duration = 430) => {
+  if (!activeTurn) return;
+  window.cancelAnimationFrame(turnAnimationFrame);
+  const startProgress = activeTurn.progress;
+  const distance = Math.abs(target - startProgress);
+  const adjustedDuration = Math.max(140, duration * distance);
+  const startTime = performance.now();
+
+  const tick = (now) => {
+    if (!activeTurn) return;
+    const elapsed = clamp((now - startTime) / adjustedDuration, 0, 1);
+    const eased = 1 - Math.pow(1 - elapsed, 3);
+    setTurnProgress(startProgress + (target - startProgress) * eased);
+
+    if (elapsed < 1) {
+      turnAnimationFrame = window.requestAnimationFrame(tick);
+      return;
+    }
+
+    finishTurn(target === 1);
   };
 
-  const handleTurnEnd = (event) => {
-    if (event.target === elements.turnBack) finishTurn();
-  };
+  turnAnimationFrame = window.requestAnimationFrame(tick);
+};
 
-  elements.turnBack.addEventListener("animationend", handleTurnEnd);
-  turnFallbackTimer = window.setTimeout(finishTurn, 1000);
+const turnPages = (direction) => {
+  if (!beginTurn(direction)) return;
+  animateTurnTo(1, 820);
+};
+
+const pointerX = (event) => event.clientX;
+
+const directionFromPointer = (startX, currentX, bounds) => {
+  const distance = currentX - startX;
+  if (Math.abs(distance) < 8) return 0;
+
+  if (isMobile) return distance < 0 ? 1 : -1;
+
+  const center = bounds.left + bounds.width / 2;
+  if (startX >= center && distance < 0) return 1;
+  if (startX < center && distance > 0) return -1;
+  return 0;
+};
+
+const handlePointerDown = (event) => {
+  if (event.button !== undefined && event.button !== 0) return;
+  if (isAnimating || event.target.closest("a, button, input, audio")) return;
+
+  dragState = {
+    pointerId: event.pointerId,
+    startX: pointerX(event),
+    lastX: pointerX(event),
+    startedAt: performance.now(),
+    bounds: elements.book.getBoundingClientRect(),
+    direction: 0,
+  };
+  elements.book.setPointerCapture?.(event.pointerId);
+};
+
+const handlePointerMove = (event) => {
+  if (!dragState || dragState.pointerId !== event.pointerId) return;
+  const currentX = pointerX(event);
+
+  if (!dragState.direction) {
+    const direction = directionFromPointer(
+      dragState.startX,
+      currentX,
+      dragState.bounds
+    );
+    if (!direction) return;
+    if (!beginTurn(direction)) {
+      dragState = null;
+      return;
+    }
+    dragState.direction = direction;
+    elements.book.classList.add("is-dragging");
+  }
+
+  event.preventDefault();
+  dragState.lastX = currentX;
+  const distance = currentX - dragState.startX;
+  const signedDistance = dragState.direction > 0 ? -distance : distance;
+  const pageWidth = isMobile ? dragState.bounds.width : dragState.bounds.width / 2;
+  setTurnProgress(signedDistance / pageWidth);
+};
+
+const handlePointerEnd = (event) => {
+  if (!dragState || dragState.pointerId !== event.pointerId) return;
+
+  if (!activeTurn || !dragState.direction) {
+    dragState = null;
+    return;
+  }
+
+  const elapsed = Math.max(performance.now() - dragState.startedAt, 1);
+  const distance = dragState.lastX - dragState.startX;
+  const velocity = (dragState.direction > 0 ? -distance : distance) / elapsed;
+  const shouldComplete = activeTurn.progress >= 0.42 || velocity > 0.65;
+  dragState = null;
+  elements.book.classList.remove("is-dragging");
+  animateTurnTo(shouldComplete ? 1 : 0, shouldComplete ? 460 : 360);
+};
+
+const cancelPointerDrag = (event) => {
+  if (!dragState || dragState.pointerId !== event.pointerId) return;
+  dragState = null;
+  if (activeTurn) {
+    elements.book.classList.remove("is-dragging");
+    animateTurnTo(0, 300);
+  }
 };
 
 const initialize = () => {
@@ -419,15 +564,11 @@ window.addEventListener("keydown", (event) => {
   }
 });
 
-elements.book.addEventListener("touchstart", (event) => {
-  touchStartX = event.changedTouches[0].clientX;
-}, { passive: true });
-
-elements.book.addEventListener("touchend", (event) => {
-  const distance = event.changedTouches[0].clientX - touchStartX;
-  if (Math.abs(distance) < 45) return;
-  turnPages(distance < 0 ? 1 : -1);
-}, { passive: true });
+elements.book.addEventListener("pointerdown", handlePointerDown);
+elements.book.addEventListener("pointermove", handlePointerMove);
+elements.book.addEventListener("pointerup", handlePointerEnd);
+elements.book.addEventListener("pointercancel", cancelPointerDrag);
+elements.book.addEventListener("lostpointercapture", cancelPointerDrag);
 
 window.addEventListener("resize", () => {
   window.clearTimeout(resizeTimer);
