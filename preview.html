@@ -33,6 +33,40 @@
       <span data-reader-word-count></span>
     </section>
 
+    <section class="reader-audio" data-reader-audio hidden aria-label="Audiobook do primeiro capítulo">
+      <div class="reader-audio-heading">
+        <span class="reader-audio-eyebrow">Audiobook exclusivo</span>
+        <strong data-audio-title>Ouça o primeiro capítulo</strong>
+        <small>Narração completa para acompanhar a leitura</small>
+      </div>
+
+      <button class="reader-audio-play" type="button" data-audio-play aria-label="Reproduzir audiobook">
+        <span data-audio-play-icon aria-hidden="true">▶</span>
+      </button>
+
+      <div class="reader-audio-timeline">
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value="0"
+          step="0.1"
+          data-audio-progress
+          aria-label="Posição do audiobook"
+        >
+        <div class="reader-audio-time" aria-live="off">
+          <span data-audio-current>0:00</span>
+          <span data-audio-duration>25:55</span>
+        </div>
+      </div>
+
+      <button class="reader-audio-speed" type="button" data-audio-speed aria-label="Velocidade de reprodução">
+        1×
+      </button>
+
+      <audio data-audio-element preload="none"></audio>
+    </section>
+
     <div class="reader-stage" data-reader-stage aria-live="polite">
       <div class="reader-book" data-reader-book>
         <article class="reader-page reader-page-left" data-reader-page-left></article>

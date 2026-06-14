@@ -2,6 +2,13 @@ const previews = window.BOOK_PREVIEWS || {};
 const params = new URLSearchParams(window.location.search);
 const requestedBook = params.get("livro") || "terra";
 const book = previews[requestedBook] || previews.terra;
+const audiobooks = {
+  terra: {
+    src: "assets/audio/terra-dos-monstros-capitulo-1.m4a",
+    title: "Um dia de cada vez",
+  },
+};
+const audiobook = audiobooks[requestedBook];
 
 const elements = {
   body: document.body,
@@ -19,6 +26,15 @@ const elements = {
   next: document.querySelector("[data-reader-next]"),
   pageLabel: document.querySelector("[data-reader-page-label]"),
   progress: document.querySelector("[data-reader-progress]"),
+  audioPanel: document.querySelector("[data-reader-audio]"),
+  audioTitle: document.querySelector("[data-audio-title]"),
+  audio: document.querySelector("[data-audio-element]"),
+  audioPlay: document.querySelector("[data-audio-play]"),
+  audioPlayIcon: document.querySelector("[data-audio-play-icon]"),
+  audioProgress: document.querySelector("[data-audio-progress]"),
+  audioCurrent: document.querySelector("[data-audio-current]"),
+  audioDuration: document.querySelector("[data-audio-duration]"),
+  audioSpeed: document.querySelector("[data-audio-speed]"),
 };
 
 let pages = [];
@@ -27,6 +43,8 @@ let isAnimating = false;
 let isMobile = window.matchMedia("(max-width: 700px)").matches;
 let resizeTimer;
 let touchStartX = 0;
+const playbackRates = [1, 1.25, 1.5, 0.75];
+let playbackRateIndex = 0;
 
 const textOf = (paragraph) => paragraph.text.trim();
 
@@ -196,6 +214,81 @@ const renderPage = (page, target) => {
 
 const spreadStep = () => (isMobile ? 1 : 2);
 
+const formatTime = (seconds) => {
+  if (!Number.isFinite(seconds)) return "0:00";
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = Math.floor(seconds % 60);
+  return `${minutes}:${String(remainingSeconds).padStart(2, "0")}`;
+};
+
+const updateAudioButton = () => {
+  const isPlaying = !elements.audio.paused;
+  elements.audioPlayIcon.textContent = isPlaying ? "❚❚" : "▶";
+  elements.audioPlay.setAttribute(
+    "aria-label",
+    isPlaying ? "Pausar audiobook" : "Reproduzir audiobook"
+  );
+  elements.audioPanel.classList.toggle("is-playing", isPlaying);
+};
+
+const initializeAudiobook = () => {
+  if (!audiobook) return;
+
+  elements.audioPanel.hidden = false;
+  elements.audioTitle.textContent = audiobook.title;
+  elements.audio.src = audiobook.src;
+
+  elements.audioPlay.addEventListener("click", async () => {
+    if (elements.audio.paused) {
+      try {
+        await elements.audio.play();
+      } catch {
+        elements.audioPanel.classList.add("has-error");
+      }
+    } else {
+      elements.audio.pause();
+    }
+  });
+
+  elements.audio.addEventListener("play", updateAudioButton);
+  elements.audio.addEventListener("pause", updateAudioButton);
+  elements.audio.addEventListener("ended", updateAudioButton);
+  elements.audio.addEventListener("loadedmetadata", () => {
+    elements.audioDuration.textContent = formatTime(elements.audio.duration);
+  });
+  elements.audio.addEventListener("timeupdate", () => {
+    const percentage = elements.audio.duration
+      ? (elements.audio.currentTime / elements.audio.duration) * 100
+      : 0;
+    elements.audioProgress.value = percentage;
+    elements.audioProgress.style.setProperty("--audio-progress", `${percentage}%`);
+    elements.audioCurrent.textContent = formatTime(elements.audio.currentTime);
+  });
+  elements.audio.addEventListener("error", () => {
+    elements.audioPanel.classList.add("has-error");
+    elements.audioTitle.textContent = "Não foi possível carregar o audiobook";
+    elements.audioPlay.disabled = true;
+  });
+
+  elements.audioProgress.addEventListener("input", () => {
+    if (!elements.audio.duration) return;
+    const percentage = Number(elements.audioProgress.value);
+    elements.audio.currentTime = (percentage / 100) * elements.audio.duration;
+    elements.audioProgress.style.setProperty("--audio-progress", `${percentage}%`);
+  });
+
+  elements.audioSpeed.addEventListener("click", () => {
+    playbackRateIndex = (playbackRateIndex + 1) % playbackRates.length;
+    const rate = playbackRates[playbackRateIndex];
+    elements.audio.playbackRate = rate;
+    elements.audioSpeed.textContent = `${String(rate).replace(".", ",")}×`;
+    elements.audioSpeed.setAttribute(
+      "aria-label",
+      `Velocidade de reprodução: ${String(rate).replace(".", ",")} vezes`
+    );
+  });
+};
+
 const renderSpread = () => {
   const left = isMobile ? null : pages[currentIndex];
   const right = isMobile ? pages[currentIndex] : pages[currentIndex + 1];
@@ -249,6 +342,7 @@ const initialize = () => {
     link.href = book.buyUrl;
   });
 
+  initializeAudiobook();
   buildPages();
 };
 
@@ -256,6 +350,8 @@ elements.previous.addEventListener("click", () => turnPages(-1));
 elements.next.addEventListener("click", () => turnPages(1));
 
 window.addEventListener("keydown", (event) => {
+  const isInteractive = event.target.closest("button, a, input, audio");
+  if (isInteractive) return;
   if (event.key === "ArrowLeft") turnPages(-1);
   if (event.key === "ArrowRight" || event.key === " ") {
     event.preventDefault();
