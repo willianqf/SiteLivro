@@ -366,12 +366,22 @@ button {
 .reader-book {
   position: relative;
   display: grid;
-  filter: drop-shadow(0 35px 55px rgba(0, 0, 0, 0.58));
   grid-template-columns: var(--page-width) var(--page-width);
+  isolation: isolate;
   touch-action: pan-y;
   transform-style: preserve-3d;
   user-select: none;
   cursor: grab;
+}
+
+.reader-book::before {
+  position: absolute;
+  z-index: -1;
+  inset: 3% 2%;
+  border-radius: 8px;
+  box-shadow: 0 35px 55px rgba(0, 0, 0, 0.58);
+  content: "";
+  pointer-events: none;
 }
 
 .reader-book.is-dragging {
@@ -440,8 +450,10 @@ button {
   border-radius: 0;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  contain: layout paint style;
+  transform: translateZ(0);
   transform-style: preserve-3d;
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
 }
 
 .reader-turn.is-next .reader-turn-front {

@@ -52,6 +52,8 @@ let resizeTimer;
 let activeTurn = null;
 let dragState = null;
 let turnAnimationFrame = 0;
+let dragAnimationFrame = 0;
+let pendingDragProgress = null;
 const playbackRates = [1, 1.25, 1.5, 0.75];
 let playbackRateIndex = 0;
 
@@ -368,14 +370,11 @@ const setTurnProgress = (progress) => {
     const frontAngle = movingForward
       ? normalized * -90
       : (1 - normalized) * -90;
-    const frontShadow = Math.sin(normalized * Math.PI) * 0.44;
 
     activeTurn.progress = normalized;
     elements.turn.style.setProperty("--turn-progress", String(normalized));
     elements.turnFront.style.opacity = "1";
-    elements.turnFront.style.transform = `rotateY(${frontAngle}deg)`;
-    elements.turnFront.style.filter =
-      `drop-shadow(${movingForward ? -1 : 1}rem 1rem 1.4rem rgba(0, 0, 0, ${frontShadow}))`;
+    elements.turnFront.style.transform = `translateZ(0) rotateY(${frontAngle}deg)`;
     elements.turnBack.style.display = "none";
     elements.turn.style.setProperty(
       "--front-shadow-opacity",
@@ -389,19 +388,13 @@ const setTurnProgress = (progress) => {
   const backProgress = Math.max((normalized - 0.5) * 2, 0);
   const frontAngle = frontProgress * 90 * (movingForward ? -1 : 1);
   const backAngle = (1 - backProgress) * 90 * (movingForward ? 1 : -1);
-  const frontShadow = Math.sin(frontProgress * Math.PI) * 0.44;
-  const backShadow = Math.sin((1 - backProgress) * Math.PI) * 0.38;
 
   activeTurn.progress = normalized;
   elements.turn.style.setProperty("--turn-progress", String(normalized));
   elements.turnFront.style.opacity = normalized < 0.5 ? "1" : "0";
-  elements.turnFront.style.transform = `rotateY(${frontAngle}deg)`;
-  elements.turnFront.style.filter =
-    `drop-shadow(${movingForward ? -1 : 1}rem 1rem 1.4rem rgba(0, 0, 0, ${frontShadow}))`;
+  elements.turnFront.style.transform = `translateZ(0) rotateY(${frontAngle}deg)`;
   elements.turnBack.style.opacity = normalized >= 0.5 ? "1" : "0";
-  elements.turnBack.style.transform = `rotateY(${backAngle}deg)`;
-  elements.turnBack.style.filter =
-    `drop-shadow(${movingForward ? 1 : -1}rem 1rem 1.4rem rgba(0, 0, 0, ${backShadow}))`;
+  elements.turnBack.style.transform = `translateZ(0) rotateY(${backAngle}deg)`;
   elements.turn.style.setProperty(
     "--front-shadow-opacity",
     String(Math.sin(frontProgress * Math.PI) * 0.9)
@@ -432,6 +425,9 @@ const beginTurn = (direction) => {
 const finishTurn = (commit) => {
   if (!activeTurn) return;
   window.cancelAnimationFrame(turnAnimationFrame);
+  window.cancelAnimationFrame(dragAnimationFrame);
+  dragAnimationFrame = 0;
+  pendingDragProgress = null;
   if (commit) {
     currentIndex = activeTurn.nextIndex;
   }
@@ -475,7 +471,7 @@ const animateTurnTo = (target, duration = 430) => {
 
 const turnPages = (direction) => {
   if (!beginTurn(direction)) return;
-  animateTurnTo(1, 820);
+  animateTurnTo(1, 650);
 };
 
 const pointerX = (event) => event.clientX;
@@ -531,11 +527,27 @@ const handlePointerMove = (event) => {
   const distance = currentX - dragState.startX;
   const signedDistance = dragState.direction > 0 ? -distance : distance;
   const pageWidth = isMobile ? dragState.bounds.width : dragState.bounds.width / 2;
-  setTurnProgress(signedDistance / pageWidth);
+  pendingDragProgress = signedDistance / pageWidth;
+
+  if (!dragAnimationFrame) {
+    dragAnimationFrame = window.requestAnimationFrame(() => {
+      dragAnimationFrame = 0;
+      if (pendingDragProgress === null) return;
+      setTurnProgress(pendingDragProgress);
+      pendingDragProgress = null;
+    });
+  }
 };
 
 const handlePointerEnd = (event) => {
   if (!dragState || dragState.pointerId !== event.pointerId) return;
+
+  if (pendingDragProgress !== null) {
+    window.cancelAnimationFrame(dragAnimationFrame);
+    dragAnimationFrame = 0;
+    setTurnProgress(pendingDragProgress);
+    pendingDragProgress = null;
+  }
 
   if (!activeTurn || !dragState.direction) {
     dragState = null;
@@ -553,6 +565,9 @@ const handlePointerEnd = (event) => {
 
 const cancelPointerDrag = (event) => {
   if (!dragState || dragState.pointerId !== event.pointerId) return;
+  window.cancelAnimationFrame(dragAnimationFrame);
+  dragAnimationFrame = 0;
+  pendingDragProgress = null;
   dragState = null;
   if (activeTurn) {
     elements.book.classList.remove("is-dragging");
