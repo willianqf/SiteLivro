@@ -327,7 +327,7 @@ const preparePageTurn = (direction, nextIndex) => {
   if (isMobile) {
     renderPage(pages[nextIndex], elements.rightPage);
     renderPage(pages[currentIndex], elements.turnFront);
-    renderPage(pages[nextIndex], elements.turnBack);
+    renderPage(null, elements.turnBack);
     return;
   }
 
