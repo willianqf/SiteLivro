@@ -177,7 +177,7 @@ const responsiveImage = (file, alt) => {
 const jsonLd = (data) =>
   `<script type="application/ld+json">${JSON.stringify(data)}</script>`;
 
-const head = ({ title, description, canonical, image, structuredData, css = "../assets/styles.css?v=20260614-3", favicon = "../assets/favicon.svg" }) => `
+const head = ({ title, description, canonical, image, structuredData, css = "../assets/styles.css?v=20260614-4", favicon = "../assets/favicon.svg" }) => `
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="${escapeHtml(description)}">
@@ -238,7 +238,7 @@ const footer = (prefix = "../") => `
       <p class="copyright">© <span data-year></span> Willian Quirino.</p>
     </div>
   </footer>
-  <script src="${prefix}assets/script.js?v=20260614-2"></script>`;
+  <script src="${prefix}assets/script.js?v=20260614-3"></script>`;
 
 const breadcrumbs = (items) => jsonLd({
   "@context": "https://schema.org",
@@ -280,6 +280,28 @@ const bookPage = (key, book) => {
         </div>
         <iframe class="spotify-player" src="${book.spotifyEmbed}" title="Trilha sonora de ${displayTitle} no Spotify" width="100%" height="352" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
       </section>` : "";
+  const cover = key === "terra" ? `<div class="book-3d-shell" data-book-3d>
+            <div class="book-3d-scene" role="img" tabindex="0" aria-label="Modelo tridimensional do livro A Terra dos Monstros. Arraste para girar." data-book-3d-scene>
+              <div class="book-3d" data-book-3d-model>
+                <div class="book-3d-face book-3d-front">
+                  <img src="../assets/images/book-3d/terra-front.webp" alt="Capa de A Terra dos Monstros" width="900" height="1273">
+                </div>
+                <div class="book-3d-face book-3d-back">
+                  <img src="../assets/images/book-3d/terra-back.webp" alt="" width="900" height="1273">
+                </div>
+                <div class="book-3d-face book-3d-spine">
+                  <img src="../assets/images/book-3d/terra-spine.webp" alt="" width="128" height="1280">
+                </div>
+                <div class="book-3d-face book-3d-pages book-3d-page-edge" aria-hidden="true"></div>
+                <div class="book-3d-face book-3d-pages book-3d-page-top" aria-hidden="true"></div>
+                <div class="book-3d-face book-3d-pages book-3d-page-bottom" aria-hidden="true"></div>
+              </div>
+            </div>
+            <div class="book-3d-controls">
+              <span>Arraste para girar</span>
+              <button type="button" data-book-3d-reset aria-label="Voltar o livro para a posição inicial">Reposicionar</button>
+            </div>
+          </div>` : `<img src="../assets/images/${webp(book.cover)}" alt="Capa de ${book.title}" width="555" height="800">`;
 
   return `<!doctype html>
 <html lang="pt-BR">
@@ -301,7 +323,7 @@ ${header()}
       <div class="detail-hero-art" style="background-image:url('../assets/images/${webp(book.hero)}')" aria-hidden="true"></div>
       <div class="container detail-hero-layout">
         <div class="detail-cover reveal">
-          <img src="../assets/images/${webp(book.cover)}" alt="Capa de ${book.title}" width="555" height="800">
+          ${cover}
         </div>
         <div class="detail-intro reveal">
           <p class="eyebrow">${book.eyebrow}</p>

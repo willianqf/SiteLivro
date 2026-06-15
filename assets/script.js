@@ -120,6 +120,83 @@ updateParallax();
 window.addEventListener("scroll", requestParallaxUpdate, { passive: true });
 window.addEventListener("resize", requestParallaxUpdate);
 
+document.querySelectorAll("[data-book-3d]").forEach((shell) => {
+  const scene = shell.querySelector("[data-book-3d-scene]");
+  const model = shell.querySelector("[data-book-3d-model]");
+  const reset = shell.querySelector("[data-book-3d-reset]");
+  const initialRotation = { x: -4, y: 16 };
+  const rotation = { ...initialRotation };
+  let drag = null;
+  let frame = 0;
+
+  const render = () => {
+    frame = 0;
+    model.style.setProperty("--book-rotate-x", `${rotation.x}deg`);
+    model.style.setProperty("--book-rotate-y", `${rotation.y}deg`);
+  };
+
+  const requestRender = () => {
+    if (!frame) frame = window.requestAnimationFrame(render);
+  };
+
+  const restore = () => {
+    rotation.x = initialRotation.x;
+    rotation.y = initialRotation.y;
+    scene.classList.remove("is-dragging");
+    requestRender();
+  };
+
+  scene.addEventListener("pointerdown", (event) => {
+    if (event.button !== undefined && event.button !== 0) return;
+    drag = {
+      pointerId: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+      rotationX: rotation.x,
+      rotationY: rotation.y,
+    };
+    scene.classList.add("is-dragging");
+    scene.setPointerCapture?.(event.pointerId);
+  });
+
+  scene.addEventListener("pointermove", (event) => {
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    const deltaX = event.clientX - drag.x;
+    const deltaY = event.clientY - drag.y;
+    if (Math.abs(deltaX) > Math.abs(deltaY)) event.preventDefault();
+    rotation.y = drag.rotationY + deltaX * 0.48;
+    rotation.x = Math.max(-28, Math.min(28, drag.rotationX - deltaY * 0.32));
+    requestRender();
+  });
+
+  const endDrag = (event) => {
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    drag = null;
+    scene.classList.remove("is-dragging");
+  };
+
+  scene.addEventListener("pointerup", endDrag);
+  scene.addEventListener("pointercancel", endDrag);
+  scene.addEventListener("lostpointercapture", endDrag);
+  scene.addEventListener("keydown", (event) => {
+    const changes = {
+      ArrowLeft: [0, -12],
+      ArrowRight: [0, 12],
+      ArrowUp: [-7, 0],
+      ArrowDown: [7, 0],
+    };
+    const change = changes[event.key];
+    if (!change) return;
+    event.preventDefault();
+    rotation.x = Math.max(-28, Math.min(28, rotation.x + change[0]));
+    rotation.y += change[1];
+    requestRender();
+  });
+
+  reset?.addEventListener("click", restore);
+  render();
+});
+
 const navLinks = [...document.querySelectorAll('.site-nav a[href^="#"]')];
 const trackedSections = navLinks
   .map((link) => document.querySelector(link.getAttribute("href")))
