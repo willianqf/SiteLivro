@@ -1394,7 +1394,10 @@ button {
   height: 100%;
   border-radius: 0;
   object-fit: cover;
+  pointer-events: none;
   box-shadow: none;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 .book-3d-front {

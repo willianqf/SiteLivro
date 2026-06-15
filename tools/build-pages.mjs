@@ -284,13 +284,13 @@ const bookPage = (key, book) => {
             <div class="book-3d-scene" role="img" tabindex="0" aria-label="Modelo tridimensional do livro A Terra dos Monstros. Arraste para girar." data-book-3d-scene>
               <div class="book-3d" data-book-3d-model>
                 <div class="book-3d-face book-3d-front">
-                  <img src="../assets/images/book-3d/terra-front.webp" alt="Capa de A Terra dos Monstros" width="900" height="1273">
+                  <img src="../assets/images/book-3d/terra-front.webp" alt="Capa de A Terra dos Monstros" width="900" height="1273" draggable="false">
                 </div>
                 <div class="book-3d-face book-3d-back">
-                  <img src="../assets/images/book-3d/terra-back.webp" alt="" width="900" height="1273">
+                  <img src="../assets/images/book-3d/terra-back.webp" alt="" width="900" height="1273" draggable="false">
                 </div>
                 <div class="book-3d-face book-3d-spine">
-                  <img src="../assets/images/book-3d/terra-spine.webp" alt="" width="128" height="1280">
+                  <img src="../assets/images/book-3d/terra-spine.webp" alt="" width="128" height="1280" draggable="false">
                 </div>
                 <div class="book-3d-face book-3d-pages book-3d-page-edge" aria-hidden="true"></div>
                 <div class="book-3d-face book-3d-pages book-3d-page-top" aria-hidden="true"></div>

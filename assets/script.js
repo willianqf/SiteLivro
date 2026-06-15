@@ -146,6 +146,8 @@ document.querySelectorAll("[data-book-3d]").forEach((shell) => {
     requestRender();
   };
 
+  scene.addEventListener("dragstart", (event) => event.preventDefault());
+
   scene.addEventListener("pointerdown", (event) => {
     if (event.button !== undefined && event.button !== 0) return;
     drag = {
