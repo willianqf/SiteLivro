@@ -29,6 +29,15 @@ const books = {
     spotifyEmbed: "https://open.spotify.com/embed/album/6ZWQOwftjpiECe2zX6UdA5?utm_source=generator&theme=0",
     soundtrackDescription: "Uma trilha sombria, atmosférica e tensa, criada para acompanhar a vida dentro das muralhas e o medo que atravessa a floresta.",
     accent: "terra",
+    model3d: {
+      asset: "terra",
+      ratio: 1.414,
+      depth: 48,
+      mobileDepth: 40,
+      imageHeight: 1273,
+      spineWidth: 128,
+      spineHeight: 1280,
+    },
   },
   elemental: {
     slug: "elemental",
@@ -44,6 +53,15 @@ const books = {
     themes: ["Space opera", "Caatinga", "Legado"],
     buyUrl: "https://loja.uiclap.com/titulo/ua151952",
     accent: "elemental",
+    model3d: {
+      asset: "elemental",
+      ratio: 1.427,
+      depth: 36,
+      mobileDepth: 30,
+      imageHeight: 1284,
+      spineWidth: 96,
+      spineHeight: 1397,
+    },
   },
   veter: {
     slug: "veter",
@@ -61,6 +79,15 @@ const books = {
     spotifyEmbed: "https://open.spotify.com/embed/album/4aqvhBNZdb1g7GXYm2HLyO?utm_source=generator&theme=0",
     soundtrackDescription: "Uma trilha urbana, distópica e emocional, conduzida por transformação, perda e uma força que já não pode ser controlada.",
     accent: "veter",
+    model3d: {
+      asset: "veter",
+      ratio: 1.418,
+      depth: 40,
+      mobileDepth: 34,
+      imageHeight: 1276,
+      spineWidth: 96,
+      spineHeight: 1397,
+    },
   },
 };
 
@@ -177,7 +204,7 @@ const responsiveImage = (file, alt) => {
 const jsonLd = (data) =>
   `<script type="application/ld+json">${JSON.stringify(data)}</script>`;
 
-const head = ({ title, description, canonical, image, structuredData, css = "../assets/styles.css?v=20260614-4", favicon = "../assets/favicon.svg" }) => `
+const head = ({ title, description, canonical, image, structuredData, css = "../assets/styles.css?v=20260615-1", favicon = "../assets/favicon.svg" }) => `
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="${escapeHtml(description)}">
@@ -280,17 +307,21 @@ const bookPage = (key, book) => {
         </div>
         <iframe class="spotify-player" src="${book.spotifyEmbed}" title="Trilha sonora de ${displayTitle} no Spotify" width="100%" height="352" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
       </section>` : "";
-  const cover = key === "terra" ? `<div class="book-3d-shell" data-book-3d>
-            <div class="book-3d-scene" role="img" tabindex="0" aria-label="Modelo tridimensional do livro A Terra dos Monstros. Arraste para girar." data-book-3d-scene>
+  const cover = book.model3d ? `<div
+            class="book-3d-shell"
+            data-book-3d
+            style="--book-ratio:${book.model3d.ratio};--book-depth-desktop:${book.model3d.depth}px;--book-depth-mobile:${book.model3d.mobileDepth}px"
+          >
+            <div class="book-3d-scene" role="img" tabindex="0" aria-label="Modelo tridimensional do livro ${displayTitle}. Arraste para girar." data-book-3d-scene>
               <div class="book-3d" data-book-3d-model>
                 <div class="book-3d-face book-3d-front">
-                  <img src="../assets/images/book-3d/terra-front.webp" alt="Capa de A Terra dos Monstros" width="900" height="1273" draggable="false">
+                  <img src="../assets/images/book-3d/${book.model3d.asset}-front.webp" alt="Capa de ${book.title}" width="900" height="${book.model3d.imageHeight}" draggable="false">
                 </div>
                 <div class="book-3d-face book-3d-back">
-                  <img src="../assets/images/book-3d/terra-back.webp" alt="" width="900" height="1273" draggable="false">
+                  <img src="../assets/images/book-3d/${book.model3d.asset}-back.webp" alt="" width="900" height="${book.model3d.imageHeight}" draggable="false">
                 </div>
                 <div class="book-3d-face book-3d-spine">
-                  <img src="../assets/images/book-3d/terra-spine.webp" alt="" width="128" height="1280" draggable="false">
+                  <img src="../assets/images/book-3d/${book.model3d.asset}-spine.webp" alt="" width="${book.model3d.spineWidth}" height="${book.model3d.spineHeight}" draggable="false">
                 </div>
                 <div class="book-3d-face book-3d-pages book-3d-page-edge" aria-hidden="true"></div>
                 <div class="book-3d-face book-3d-pages book-3d-page-top" aria-hidden="true"></div>

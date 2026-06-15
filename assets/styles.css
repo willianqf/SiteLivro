@@ -1339,8 +1339,8 @@ button {
 
 .book-3d-shell {
   --book-width: min(24vw, 318px);
-  --book-height: calc(var(--book-width) * 1.414);
-  --book-depth: clamp(34px, 3.4vw, 48px);
+  --book-height: calc(var(--book-width) * var(--book-ratio, 1.414));
+  --book-depth: var(--book-depth-desktop, clamp(34px, 3.4vw, 48px));
   display: grid;
   justify-items: center;
   perspective: 1700px;
@@ -1398,6 +1398,10 @@ button {
   box-shadow: none;
   user-select: none;
   -webkit-user-drag: none;
+}
+
+.book-3d-spine img {
+  object-fit: fill;
 }
 
 .book-3d-front {
@@ -2414,7 +2418,7 @@ button {
 
   .book-3d-shell {
     --book-width: min(62vw, 245px);
-    --book-depth: clamp(29px, 9vw, 40px);
+    --book-depth: var(--book-depth-mobile, clamp(29px, 9vw, 40px));
   }
 
   .book-3d-scene {
