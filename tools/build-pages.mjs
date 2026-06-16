@@ -204,6 +204,15 @@ const responsiveImage = (file, alt) => {
 const jsonLd = (data) =>
   `<script type="application/ld+json">${JSON.stringify(data)}</script>`;
 
+const analyticsId = "G-E9LKKPWMXY";
+const analyticsTag = `<script async src="https://www.googletagmanager.com/gtag/js?id=${analyticsId}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "${analyticsId}");
+  </script>`;
+
 const head = ({ title, description, canonical, image, structuredData, css = "../assets/styles.css?v=20260615-1", favicon = "../assets/favicon.svg" }) => `
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -227,6 +236,7 @@ const head = ({ title, description, canonical, image, structuredData, css = "../
   <title>${escapeHtml(title)}</title>
   <link rel="icon" href="${favicon}" type="image/svg+xml">
   <link rel="stylesheet" href="${css}">
+  ${analyticsTag}
   ${structuredData.map(jsonLd).join("\n  ")}`;
 
 const header = (prefix = "../") => `
@@ -265,7 +275,7 @@ const footer = (prefix = "../") => `
       <p class="copyright">© <span data-year></span> Willian Quirino.</p>
     </div>
   </footer>
-  <script src="${prefix}assets/script.js?v=20260614-3"></script>`;
+  <script src="${prefix}assets/script.js?v=20260616-1"></script>`;
 
 const breadcrumbs = (items) => jsonLd({
   "@context": "https://schema.org",
@@ -517,7 +527,7 @@ ${head({
     </details>
   </main>
   <script src="../../assets/preview-data.js"></script>
-  <script src="../../assets/reader.js"></script>
+  <script src="../../assets/reader.js?v=20260616-1"></script>
 </body>
 </html>`;
 };

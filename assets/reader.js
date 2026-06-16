@@ -14,6 +14,15 @@ const audiobooks = {
 };
 const audiobook = audiobooks[requestedBook];
 
+const trackReaderEvent = (eventName, parameters = {}) => {
+  if (typeof window.gtag !== "function") return;
+  window.gtag("event", eventName, {
+    book: book.title,
+    preview: book.chapterTitle,
+    ...parameters,
+  });
+};
+
 const elements = {
   body: document.body,
   backdrop: document.querySelector("[data-reader-backdrop]"),
@@ -54,6 +63,7 @@ let dragState = null;
 let turnAnimationFrame = 0;
 const playbackRates = [1, 1.25, 1.5, 0.75];
 let playbackRateIndex = 0;
+let trackedReaderTurn = false;
 
 const textOf = (paragraph) => paragraph.text.trim();
 
@@ -475,6 +485,12 @@ const animateTurnTo = (target, duration = 430) => {
 
 const turnPages = (direction) => {
   if (!beginTurn(direction)) return;
+  if (!trackedReaderTurn) {
+    trackedReaderTurn = true;
+    trackReaderEvent("preview_page_turn", {
+      direction: direction > 0 ? "next" : "previous",
+    });
+  }
   animateTurnTo(1, 820);
 };
 
@@ -577,10 +593,17 @@ const initialize = () => {
   elements.wordCount.textContent = `${book.wordCount.toLocaleString("pt-BR")} palavras nesta prévia`;
   elements.buyLinks.forEach((link) => {
     link.href = book.buyUrl;
+    link.addEventListener("click", () => {
+      trackReaderEvent("purchase_click", {
+        source: "preview_reader",
+        link_url: link.href,
+      });
+    });
   });
 
   initializeAudiobook();
   buildPages();
+  trackReaderEvent("preview_open");
 };
 
 elements.previous.addEventListener("click", () => turnPages(-1));

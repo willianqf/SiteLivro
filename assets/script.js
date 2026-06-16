@@ -3,6 +3,21 @@ const menuButton = document.querySelector("[data-menu-toggle]");
 const navigation = document.querySelector("[data-nav]");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+const trackEvent = (eventName, parameters = {}) => {
+  if (typeof window.gtag !== "function") return;
+  window.gtag("event", eventName, parameters);
+};
+
+const currentBookName = () =>
+  document.querySelector(".detail-intro h1")?.textContent.trim() ||
+  document.querySelector(".profile-hero h1")?.textContent.trim() ||
+  document.title.replace(/\s*\|.*$/, "").trim();
+
+const linkContextName = (link) =>
+  link.closest("article")?.querySelector("h3")?.textContent.trim() ||
+  link.closest(".book-feature")?.querySelector("h2")?.textContent.trim() ||
+  currentBookName();
+
 const setMenuState = (isOpen) => {
   menuButton?.setAttribute("aria-expanded", String(isOpen));
   navigation?.classList.toggle("is-open", isOpen);
@@ -128,6 +143,7 @@ document.querySelectorAll("[data-book-3d]").forEach((shell) => {
   const rotation = { ...initialRotation };
   let drag = null;
   let frame = 0;
+  let trackedInteraction = false;
 
   const render = () => {
     frame = 0;
@@ -168,6 +184,13 @@ document.querySelectorAll("[data-book-3d]").forEach((shell) => {
     if (Math.abs(deltaX) > Math.abs(deltaY)) event.preventDefault();
     rotation.y = drag.rotationY + deltaX * 0.48;
     rotation.x = Math.max(-28, Math.min(28, drag.rotationX - deltaY * 0.32));
+    if (!trackedInteraction && Math.abs(deltaX) + Math.abs(deltaY) > 18) {
+      trackedInteraction = true;
+      trackEvent("book_3d_interaction", {
+        book: currentBookName(),
+        interaction_type: "drag",
+      });
+    }
     requestRender();
   });
 
@@ -195,8 +218,49 @@ document.querySelectorAll("[data-book-3d]").forEach((shell) => {
     requestRender();
   });
 
-  reset?.addEventListener("click", restore);
+  reset?.addEventListener("click", () => {
+    trackEvent("book_3d_reset", { book: currentBookName() });
+    restore();
+  });
   render();
+});
+
+document.addEventListener("click", (event) => {
+  const link = event.target.closest("a[href]");
+  if (!link) return;
+
+  const url = new URL(link.getAttribute("href"), window.location.href);
+  const linkUrl = url.href;
+  const label = linkContextName(link);
+
+  if (url.hostname.includes("uiclap.com")) {
+    trackEvent("purchase_click", {
+      book: label,
+      link_url: linkUrl,
+    });
+    return;
+  }
+
+  if (url.pathname.includes("/previa/")) {
+    trackEvent("preview_click", {
+      book: label,
+      link_url: linkUrl,
+    });
+    return;
+  }
+
+  if (
+    url.hostname.includes("spotify.com") ||
+    url.hostname.includes("music.apple.com") ||
+    url.hostname.includes("music.youtube.com") ||
+    url.hostname.includes("shazam.com")
+  ) {
+    trackEvent("music_click", {
+      title: label,
+      platform: url.hostname.replace(/^www\./, ""),
+      link_url: linkUrl,
+    });
+  }
 });
 
 const navLinks = [...document.querySelectorAll('.site-nav a[href^="#"]')];
