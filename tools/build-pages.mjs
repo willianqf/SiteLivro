@@ -85,8 +85,8 @@ const books = {
       depth: 40,
       mobileDepth: 34,
       imageHeight: 1276,
-      spineWidth: 96,
-      spineHeight: 1397,
+      spineWidth: 184,
+      spineHeight: 2172,
     },
   },
 };
