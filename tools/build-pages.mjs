@@ -205,12 +205,14 @@ const jsonLd = (data) =>
   `<script type="application/ld+json">${JSON.stringify(data)}</script>`;
 
 const analyticsId = "G-E9LKKPWMXY";
+const adsId = "AW-17919559276";
 const analyticsTag = `<script async src="https://www.googletagmanager.com/gtag/js?id=${analyticsId}"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag("js", new Date());
     gtag("config", "${analyticsId}");
+    gtag("config", "${adsId}");
   </script>`;
 
 const head = ({ title, description, canonical, image, structuredData, css = "../assets/styles.css?v=20260615-1", favicon = "../assets/favicon.svg" }) => `
