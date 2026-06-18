@@ -32,11 +32,11 @@ const books = {
     model3d: {
       asset: "terra",
       ratio: 1.414,
-      depth: 48,
-      mobileDepth: 40,
+      depth: 56,
+      mobileDepth: 44,
       imageHeight: 1273,
-      spineWidth: 128,
-      spineHeight: 1280,
+      spineWidth: 271,
+      spineHeight: 2172,
     },
   },
   elemental: {
