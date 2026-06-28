@@ -1,9 +1,9 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Conheça os livros de Willian Quirino: A Terra dos Monstros, As Histórias de Mentel: Elemental e Veter.">
+  <meta name="description" content="Conheça os livros, personagens, mundos e trilhas sonoras de Willian Quirino. Ficção científica, fantasia sombria e histórias ilustradas.">
   <meta name="theme-color" content="#071014">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="https://willianquirino.com.br/">
@@ -11,15 +11,15 @@
   <meta property="og:locale" content="pt_BR">
   <meta property="og:site_name" content="Willian Quirino">
   <meta property="og:title" content="Willian Quirino | Livros">
-  <meta property="og:description" content="Ficção científica, fantasia sombria e mundos ilustrados.">
+  <meta property="og:description" content="Conheça os livros, personagens, mundos e trilhas sonoras de Willian Quirino.">
   <meta property="og:url" content="https://willianquirino.com.br/">
   <meta property="og:image" content="https://willianquirino.com.br/assets/images/hero.jpg">
-  <meta property="og:image:alt" content="Universo literário de Willian Quirino">
+  <meta property="og:image:alt" content="Universos literÃ¡rios de Willian Quirino">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Willian Quirino | Livros">
-  <meta name="twitter:description" content="Ficção científica, fantasia sombria e mundos ilustrados.">
+  <meta name="twitter:description" content="Ficção científica, fantasia sombria, personagens e mundos ilustrados de Willian Quirino.">
   <meta name="twitter:image" content="https://willianquirino.com.br/assets/images/hero.jpg">
-  <meta name="twitter:image:alt" content="Universo literário de Willian Quirino">
+  <meta name="twitter:image:alt" content="Universos literÃ¡rios de Willian Quirino">
   <title>Willian Quirino | Livros</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/styles.css?v=20260615-1">
@@ -31,185 +31,696 @@
     gtag("config", "G-E9LKKPWMXY");
     gtag("config", "AW-17919559276");
   </script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "WebSite",
-          "name": "Willian Quirino",
-          "url": "https://willianquirino.com.br/",
-          "inLanguage": "pt-BR"
-        },
-        {
-          "@type": "Person",
-          "name": "Willian Quirino",
-          "url": "https://willianquirino.com.br/autor/",
-          "image": "https://willianquirino.com.br/assets/images/autor-willian.jpg",
-          "jobTitle": "Autor, ilustrador e compositor",
-          "sameAs": [
-            "https://music.apple.com/br/artist/willian-quirino/1851075950",
-            "https://loja.uiclap.com/pesquisa=Willian%20Quirino"
-          ]
-        }
-      ]
-    }
-  </script>
   <script>document.documentElement.classList.add("js");</script>
+  <style>
+    .prototype-ribbon {
+      position: sticky;
+      z-index: 80;
+      top: 0;
+      padding: 10px 18px;
+      border-bottom: 1px solid rgba(124, 225, 255, 0.24);
+      background: rgba(5, 12, 15, 0.9);
+      color: var(--ice);
+      font: 700 0.72rem/1.4 var(--sans);
+      letter-spacing: 0.18em;
+      text-align: center;
+      text-transform: uppercase;
+      backdrop-filter: blur(14px);
+    }
+
+    .prototype-hero {
+      position: relative;
+      min-height: 820px;
+      display: grid;
+      align-items: center;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 74% 34%, rgba(124, 225, 255, 0.16), transparent 28%),
+        radial-gradient(circle at 12% 72%, rgba(255, 176, 66, 0.12), transparent 30%),
+        linear-gradient(90deg, rgba(3, 8, 10, 0.98), rgba(4, 12, 16, 0.42)),
+        url("assets/images/hero.webp") center/cover;
+      isolation: isolate;
+    }
+
+    .prototype-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-size: 82px 82px;
+      mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2));
+      opacity: 0.42;
+    }
+
+    .prototype-hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 42%;
+      background: linear-gradient(0deg, var(--bg), transparent);
+      pointer-events: none;
+    }
+
+    .prototype-hero .container {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, calc(100% - 40px));
+      max-width: none;
+      padding-top: 74px;
+      padding-bottom: 96px;
+    }
+
+    .prototype-hero .hero-footer {
+      z-index: 2;
+      bottom: 72px;
+      width: min(1180px, calc(100% - 40px));
+    }
+
+    .prototype-hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.7fr);
+      gap: clamp(32px, 8vw, 96px);
+      align-items: center;
+    }
+
+    .prototype-hero h1 {
+      max-width: 720px;
+      margin: 14px 0 20px;
+      font: clamp(3rem, 8.6vw, 6.9rem)/0.92 var(--serif);
+      letter-spacing: -0.065em;
+      color: var(--paper);
+    }
+
+    .prototype-hero h1 em {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.78);
+      text-shadow: 0 0 42px rgba(124, 225, 255, 0.22);
+    }
+
+    .prototype-hero p {
+      max-width: 620px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: clamp(1rem, 1.55vw, 1.15rem);
+      line-height: 1.72;
+    }
+
+    .hero-stack {
+      position: relative;
+      min-height: 500px;
+      perspective: 1400px;
+    }
+
+    .hero-stack::before {
+      content: "";
+      position: absolute;
+      inset: 12% -10% 0 8%;
+      border: 1px solid rgba(124, 225, 255, 0.24);
+      background:
+        radial-gradient(circle, rgba(124, 225, 255, 0.18), transparent 58%),
+        rgba(255, 255, 255, 0.035);
+      box-shadow: 0 0 90px rgba(124, 225, 255, 0.1);
+      transform: rotate(-7deg);
+    }
+
+    .hero-book {
+      position: absolute;
+      width: min(42vw, 260px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 40px 90px rgba(0, 0, 0, 0.58);
+      transform-style: preserve-3d;
+    }
+
+    .hero-book img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 564 / 800;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    .hero-book-terra {
+      left: 18%;
+      top: 6%;
+      z-index: 3;
+      transform: rotateY(-18deg) rotateZ(-4deg);
+    }
+
+    .hero-book-elemental {
+      right: 0;
+      top: 26%;
+      z-index: 2;
+      transform: rotateY(18deg) rotateZ(7deg) scale(0.88);
+      opacity: 0.92;
+    }
+
+    .hero-book-veter {
+      left: 2%;
+      bottom: 4%;
+      z-index: 1;
+      transform: rotateY(-10deg) rotateZ(8deg) scale(0.82);
+      opacity: 0.84;
+    }
+
+    .prototype-pulse {
+      position: absolute;
+      right: 8%;
+      bottom: 10%;
+      z-index: 4;
+      width: 154px;
+      height: 154px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(124, 225, 255, 0.36);
+      border-radius: 50%;
+      background: rgba(4, 12, 16, 0.72);
+      color: var(--ice);
+      font: 800 0.68rem/1.5 var(--sans);
+      letter-spacing: 0.18em;
+      text-align: center;
+      text-transform: uppercase;
+      box-shadow: 0 0 70px rgba(124, 225, 255, 0.16);
+    }
+
+    .prototype-section {
+      padding: clamp(72px, 10vw, 130px) 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background:
+        radial-gradient(circle at 12% 10%, rgba(124, 225, 255, 0.08), transparent 28%),
+        radial-gradient(circle at 82% 42%, rgba(255, 176, 66, 0.055), transparent 30%);
+    }
+
+    .prototype-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(260px, 0.7fr);
+      gap: clamp(28px, 7vw, 80px);
+      align-items: end;
+      margin-bottom: 42px;
+    }
+
+    .prototype-heading h2 {
+      margin: 10px 0 0;
+      font: clamp(2.5rem, 7vw, 5.6rem)/0.9 var(--serif);
+      letter-spacing: -0.06em;
+      color: var(--paper);
+    }
+
+    .prototype-heading p {
+      color: rgba(255, 255, 255, 0.66);
+      line-height: 1.85;
+    }
+
+    .path-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .path-card,
+    .character-card,
+    .world-node,
+    .note-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+      box-shadow: 0 26px 80px rgba(0, 0, 0, 0.26);
+    }
+
+    .path-card {
+      min-height: 560px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 22px;
+      padding: 26px;
+      transition: transform 420ms ease, border-color 420ms ease, box-shadow 420ms ease;
+      isolation: isolate;
+    }
+
+    .path-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(124, 225, 255, 0.42);
+      box-shadow: 0 40px 110px rgba(0, 0, 0, 0.46);
+    }
+
+    .path-backdrop {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.38;
+      transform: scale(1.03);
+    }
+
+    .path-cover-frame {
+      position: relative;
+      z-index: 1;
+      width: min(62%, 210px);
+      margin: 0 auto;
+      align-self: start;
+      perspective: 900px;
+    }
+
+    .path-cover-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 564 / 800;
+      object-fit: contain;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.48);
+      transform: rotateY(-8deg) rotateZ(-1deg);
+      transition: transform 420ms ease;
+    }
+
+    .path-card:hover .path-cover-frame img {
+      transform: rotateY(0deg) rotateZ(0deg) translateY(-4px);
+    }
+
+    .path-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(0deg, rgba(3, 7, 9, 0.96), rgba(3, 7, 9, 0.22)),
+        linear-gradient(115deg, rgba(124, 225, 255, 0.2), transparent 38%);
+    }
+
+    .path-card > div {
+      position: relative;
+      z-index: 1;
+      align-self: end;
+    }
+
+    .path-card h3,
+    .character-card h3,
+    .world-node h3 {
+      margin: 10px 0 10px;
+      color: var(--paper);
+      font: 2rem/1 var(--serif);
+      letter-spacing: -0.04em;
+    }
+
+    .path-card p,
+    .character-card p,
+    .world-node p,
+    .note-card p {
+      color: rgba(255, 255, 255, 0.68);
+      line-height: 1.75;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0 22px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tag-row li,
+    .character-meta {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      padding: 7px 9px;
+      color: rgba(255, 255, 255, 0.68);
+      font: 700 0.62rem/1 var(--sans);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .character-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .character-card {
+      min-height: 420px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background-size: cover;
+      background-position: center;
+      isolation: isolate;
+      transition: transform 420ms ease, border-color 420ms ease;
+    }
+
+    .character-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255, 255, 255, 0.28);
+    }
+
+    .character-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      height: auto;
+      background:
+        linear-gradient(0deg, rgba(3, 7, 9, 0.96), rgba(3, 7, 9, 0.26)),
+        linear-gradient(115deg, rgba(124, 225, 255, 0.16), transparent 45%);
+      opacity: 1;
+    }
+
+    .character-card::after {
+      content: "";
+      position: absolute;
+      inset: 16px;
+      z-index: -1;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      pointer-events: none;
+    }
+
+    .character-card h3 {
+      font-size: 1.76rem;
+    }
+
+    .character-card blockquote {
+      margin: 20px 0 0;
+      padding-left: 14px;
+      border-left: 1px solid rgba(124, 225, 255, 0.42);
+      color: rgba(255, 255, 255, 0.78);
+      font: italic 1.05rem/1.6 var(--serif);
+    }
+
+    .world-map {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 170px minmax(0, 1fr);
+      gap: 22px;
+      align-items: stretch;
+      padding: 22px;
+      border: 1px solid rgba(124, 225, 255, 0.16);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(124, 225, 255, 0.11), transparent 36%),
+        rgba(255, 255, 255, 0.026);
+      box-shadow: inset 0 0 80px rgba(124, 225, 255, 0.04), 0 36px 120px rgba(0, 0, 0, 0.26);
+    }
+
+    .world-column {
+      display: grid;
+      gap: 18px;
+    }
+
+    .world-spine {
+      display: grid;
+      place-items: center;
+      color: var(--ice);
+      font: 700 0.68rem/1.4 var(--sans);
+      letter-spacing: 0.2em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .world-spine::before {
+      content: "";
+      width: 1px;
+      min-height: 100%;
+      background: linear-gradient(transparent, rgba(124, 225, 255, 0.8), transparent);
+      grid-area: 1 / 1;
+    }
+
+    .world-spine span {
+      grid-area: 1 / 1;
+      max-width: 128px;
+      padding: 24px 14px;
+      border: 1px solid rgba(124, 225, 255, 0.24);
+      background: rgba(6, 14, 18, 0.86);
+      box-shadow: 0 0 54px rgba(124, 225, 255, 0.12);
+    }
+
+    .world-node {
+      min-height: 310px;
+      padding: 24px;
+      background-size: cover;
+      background-position: center;
+      transition: transform 420ms ease, border-color 420ms ease;
+    }
+
+    .world-node:hover {
+      transform: translateY(-6px);
+      border-color: rgba(124, 225, 255, 0.34);
+    }
+
+    .world-node > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .world-node::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, rgba(3, 7, 9, 0.94), rgba(3, 7, 9, 0.34));
+    }
+
+    .note-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 44px;
+    }
+
+    .note-card {
+      padding: 22px;
+    }
+
+    .note-card h3 {
+      margin: 0 0 12px;
+      color: var(--paper);
+      font-size: 1.05rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .prototype-books .book-card {
+      isolation: isolate;
+    }
+
+    .prototype-books .card-stretched-link {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      font-size: 0;
+    }
+
+    .prototype-books .cover-wrap,
+    .prototype-books .book-card-body a {
+      position: relative;
+      z-index: 4;
+    }
+
+    .prototype-books .book-card-body {
+      position: relative;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .prototype-books .book-card-body a {
+      pointer-events: auto;
+    }
+
+    .prototype-books .book-card:hover h3 {
+      color: var(--paper);
+    }
+
+    .author-section .author-copy .feature-actions {
+      margin-top: 38px;
+    }
+
+    @media (max-width: 980px) {
+      .prototype-hero-grid,
+      .prototype-heading,
+      .path-grid,
+      .character-grid,
+      .note-grid,
+      .world-map {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stack {
+        min-height: 390px;
+      }
+
+      .prototype-hero .container {
+        padding-bottom: 90px;
+      }
+
+      .hero-book {
+        width: min(46vw, 210px);
+      }
+
+      .path-card {
+        min-height: 420px;
+      }
+
+      .world-spine {
+        min-height: 80px;
+      }
+
+      .world-spine::before {
+        width: 100%;
+        min-height: 1px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <a class="skip-link" href="#conteudo">Pular para o conteÃºdo</a>
 
-  <header class="site-header" data-header>
-    <a class="brand" href="#inicio" aria-label="Willian Quirino, início">
+  <header class="site-header is-scrolled page-header" data-header>
+    <a class="brand" href="#inicio" aria-label="Willian Quirino, inÃ­cio">
       <span class="brand-mark" aria-hidden="true">WQ</span>
-      <span class="brand-copy">
-        <strong>Willian Quirino</strong>
-        <small>Autor</small>
-      </span>
+      <span class="brand-copy"><strong>Willian Quirino</strong><small>Autor</small></span>
     </a>
-
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span class="sr-only">Abrir menu</span>
+      <span></span><span></span><span></span><span class="sr-only">Abrir menu</span>
     </button>
-
-    <nav class="site-nav" id="site-nav" aria-label="Navegação principal" data-nav>
-      <a href="#livros">Livros</a>
-      <a href="universos/">Universos</a>
-      <a href="trilhas/">Trilhas</a>
-      <a href="#galeria">Galeria</a>
-      <a href="autor/">O autor</a>
-      <a class="nav-cta" href="https://loja.uiclap.com/pesquisa=Willian%20Quirino" target="_blank" rel="noopener noreferrer">
-        Loja UICLAP
-      </a>
+    <nav class="site-nav" id="site-nav" aria-label="NavegaÃ§Ã£o principal" data-nav>
+      <a href="#inicio">InÃ­cio</a>
+      <a href="#comecar">Por onde comeÃ§ar</a>
+      <a href="#personagens">Personagens</a>
+      <a href="#mundos">Mapa dos mundos</a>
+      <a href="#trilhas">Trilhas</a>
+      <a href="#autor">O autor</a>
+      <a class="nav-cta" href="https://loja.uiclap.com/pesquisa=Willian%20Quirino" target="_blank" rel="noopener noreferrer">Loja UICLAP</a>
     </nav>
   </header>
 
   <main id="conteudo">
-    <section class="hero" id="inicio" aria-labelledby="hero-title">
-      <div class="hero-media" aria-hidden="true"></div>
-      <div class="hero-shade" aria-hidden="true"></div>
-      <div class="hero-orb hero-orb-one" aria-hidden="true"></div>
-      <div class="hero-orb hero-orb-two" aria-hidden="true"></div>
+    <section class="prototype-hero" id="inicio">
+      <div class="container">
+        <div class="prototype-hero-grid">
+          <div>
+            <p class="eyebrow reveal">Guias de leitura, personagens e mundos</p>
+            <h1 class="reveal">Entre pelo caminho que mais chama <em>vocÃª.</em></h1>
+            <p class="hero-lead reveal">TrÃªs obras, trÃªs atmosferas e um mesmo convite: escolher o primeiro mundo a atravessar.</p>
+            <div class="hero-actions reveal">
+              <a class="button button-primary" href="#comecar">ConheÃ§a os livros</a>
+              <a class="button button-ghost" href="#mundos">Explorar mundos</a>
+            </div>
+          </div>
 
-      <div class="hero-content container">
-        <p class="eyebrow reveal">O universo literário de Willian Quirino</p>
-        <h1 id="hero-title" class="reveal">
-          Histórias que atravessam
-          <em>mundos.</em>
-        </h1>
-        <p class="hero-lead reveal">
-          Ficção científica, fantasia sombria e personagens que descobrem forças
-          maiores do que imaginavam carregar.
-        </p>
-        <div class="hero-actions reveal">
-          <a class="button button-primary" href="#livros">Conheça os livros</a>
-          <a class="button button-ghost" href="#autor">Sobre o autor</a>
+          <div class="hero-stack reveal" aria-hidden="true">
+            <figure class="hero-book hero-book-terra">
+              <img src="assets/images/cover-terra-current.jpg" alt="">
+            </figure>
+            <figure class="hero-book hero-book-elemental">
+              <img src="assets/images/cover-elemental.webp" alt="">
+            </figure>
+            <figure class="hero-book hero-book-veter">
+              <img src="assets/images/cover-veter.webp" alt="">
+            </figure>
+            <div class="prototype-pulse">TrÃªs portas de entrada</div>
+          </div>
         </div>
       </div>
 
-      <div class="hero-footer container reveal" aria-label="Resumo do acervo">
+      <div class="hero-footer container reveal" aria-label="Resumo dos universos">
         <div>
           <strong>03</strong>
-          <span>obras publicadas</span>
+          <span>livros para explorar</span>
         </div>
         <div>
-          <strong>1.033</strong>
-          <span>páginas de histórias</span>
+          <strong>03</strong>
+          <span>mundos em conflito</span>
         </div>
         <div>
           <strong>01</strong>
-          <span>universo em expansão</span>
+          <span>universo em expansÃ£o</span>
         </div>
       </div>
-
-      <a class="scroll-cue" href="#livros" aria-label="Rolar para os livros">
-        <span></span>
-      </a>
     </section>
 
-    <section class="section books-overview" id="livros" aria-labelledby="livros-title">
+    <section class="prototype-section prototype-books" id="comecar">
       <div class="container">
-        <div class="section-heading reveal">
-          <p class="eyebrow">Três portas de entrada</p>
-          <h2 id="livros-title">Escolha o seu próximo mundo</h2>
-          <p>Cada livro tem atmosfera própria, mas todos compartilham mistério, descoberta e transformação.</p>
+        <div class="prototype-heading reveal">
+          <div>
+            <p class="eyebrow">Primeira escolha</p>
+            <h2>Por onde comeÃ§ar?</h2>
+          </div>
+          <p>Cada livro abre uma porta diferente: o medo das florestas, a queda de um estranho no sertÃ£o ou a transformaÃ§Ã£o de um homem em meio ao caos urbano. Escolha pela sensaÃ§Ã£o que vocÃª quer encontrar primeiro.</p>
         </div>
 
         <div class="book-grid">
           <article class="book-card book-card-terra reveal">
+            <a class="card-stretched-link" href="a-terra-dos-monstros/" aria-label="Conhecer A Terra dos Monstros"></a>
             <a class="cover-wrap" href="a-terra-dos-monstros/" aria-label="Conhecer A Terra dos Monstros">
-              <img src="assets/images/cover-terra.webp" alt="Capa do livro A Terra dos Monstros" width="563" height="800" decoding="async">
+              <img src="assets/images/cover-terra-current.jpg" alt="Capa do livro A Terra dos Monstros" width="900" height="1273" decoding="async">
               <span class="cover-glow" aria-hidden="true"></span>
             </a>
             <div class="book-card-body">
-              <p class="book-kicker">Fantasia sombria · Distopia</p>
+              <p class="book-kicker">Fantasia sombria Â· SobrevivÃªncia</p>
               <h3>A Terra dos Monstros</h3>
-              <p>Quando as muralhas deixam de ser proteção, Melina precisa encarar o que existe na floresta e dentro de si.</p>
-              <ul class="book-meta" aria-label="Informações do livro">
-                <li>458 páginas</li>
-                <li>Edição ilustrada</li>
+              <p>Para quem quer atravessar muralhas, medo e uma floresta onde o perigo pode revelar verdades enterradas.</p>
+              <ul class="book-meta" aria-label="InformaÃ§Ãµes do livro">
+                <li>458 pÃ¡ginas</li>
+                <li>EdiÃ§Ã£o ilustrada</li>
               </ul>
               <a class="preview-link" href="a-terra-dos-monstros/previa/">
-                Ler o primeiro capítulo <span aria-hidden="true">→</span>
+                Ler o primeiro capÃ­tulo <span aria-hidden="true">â†’</span>
               </a>
               <div class="book-actions">
-                <a class="text-link" href="a-terra-dos-monstros/">Explorar a história</a>
+                <a class="text-link" href="a-terra-dos-monstros/">Explorar a histÃ³ria</a>
                 <a class="buy-link" href="https://loja.uiclap.com/titulo/ua145914" target="_blank" rel="noopener noreferrer">
-                  Comprar <span aria-hidden="true">↗</span>
+                  Comprar <span aria-hidden="true">â†—</span>
                 </a>
               </div>
             </div>
           </article>
 
           <article class="book-card book-card-elemental reveal">
-            <a class="cover-wrap" href="elemental/" aria-label="Conhecer As Histórias de Mentel: Elemental">
-              <img src="assets/images/cover-elemental.webp" alt="Capa do livro As Histórias de Mentel: Elemental" width="564" height="800" loading="lazy" decoding="async">
+            <a class="card-stretched-link" href="elemental/" aria-label="Conhecer Elemental"></a>
+            <a class="cover-wrap" href="elemental/" aria-label="Conhecer As HistÃ³rias de Mentel: Elemental">
+              <img src="assets/images/cover-elemental.webp" alt="Capa do livro As HistÃ³rias de Mentel: Elemental" width="564" height="800" loading="lazy" decoding="async">
               <span class="cover-glow" aria-hidden="true"></span>
             </a>
             <div class="book-card-body">
-              <p class="book-kicker">Ficção científica · Aventura</p>
+              <p class="book-kicker">FicÃ§Ã£o cientÃ­fica Â· Aventura</p>
               <h3>Elemental</h3>
-              <p>O último herdeiro de Mendels cai no sertão de Pernambuco enquanto uma guerra atravessa as estrelas.</p>
-              <ul class="book-meta" aria-label="Informações do livro">
-                <li>267 páginas</li>
-                <li>Edição ilustrada</li>
+              <p>Para quem quer comeÃ§ar pela queda de um estranho no sertÃ£o e por uma guerra antiga entre mundos.</p>
+              <ul class="book-meta" aria-label="InformaÃ§Ãµes do livro">
+                <li>267 pÃ¡ginas</li>
+                <li>EdiÃ§Ã£o ilustrada</li>
               </ul>
               <a class="preview-link" href="elemental/previa/">
-                Ler trechos selecionados <span aria-hidden="true">→</span>
+                Ler trechos selecionados <span aria-hidden="true">â†’</span>
               </a>
               <div class="book-actions">
-                <a class="text-link" href="elemental/">Explorar a história</a>
+                <a class="text-link" href="elemental/">Explorar a histÃ³ria</a>
                 <a class="buy-link" href="https://loja.uiclap.com/titulo/ua151952" target="_blank" rel="noopener noreferrer">
-                  Comprar <span aria-hidden="true">↗</span>
+                  Comprar <span aria-hidden="true">â†—</span>
                 </a>
               </div>
             </div>
           </article>
 
           <article class="book-card book-card-veter reveal">
+            <a class="card-stretched-link" href="veter/" aria-label="Conhecer Veter"></a>
             <a class="cover-wrap" href="veter/" aria-label="Conhecer Veter">
               <img src="assets/images/cover-veter.webp" alt="Capa do livro Veter" width="564" height="800" loading="lazy" decoding="async">
               <span class="cover-glow" aria-hidden="true"></span>
             </a>
             <div class="book-card-body">
-              <p class="book-kicker">Distopia · Super-humano</p>
+              <p class="book-kicker">Distopia Â· Super-humano</p>
               <h3>Veter</h3>
-              <p>Um entregador sem perspectivas aceita uma cura impossível e desperta transformado em algo imprevisível.</p>
-              <ul class="book-meta" aria-label="Informações do livro">
-                <li>308 páginas</li>
-                <li>Edição ilustrada</li>
+              <p>Para quem prefere uma metrÃ³pole dura, uma cura impossÃ­vel e uma forÃ§a que nasce fora de controle.</p>
+              <ul class="book-meta" aria-label="InformaÃ§Ãµes do livro">
+                <li>308 pÃ¡ginas</li>
+                <li>EdiÃ§Ã£o ilustrada</li>
               </ul>
               <a class="preview-link" href="veter/previa/">
-                Ler o primeiro capítulo <span aria-hidden="true">→</span>
+                Ler o primeiro capÃ­tulo <span aria-hidden="true">â†’</span>
               </a>
               <div class="book-actions">
-                <a class="text-link" href="veter/">Explorar a história</a>
+                <a class="text-link" href="veter/">Explorar a histÃ³ria</a>
                 <a class="buy-link" href="https://loja.uiclap.com/titulo/ua152387" target="_blank" rel="noopener noreferrer">
-                  Comprar <span aria-hidden="true">↗</span>
+                  Comprar <span aria-hidden="true">â†—</span>
                 </a>
               </div>
             </div>
@@ -218,111 +729,135 @@
       </div>
     </section>
 
-    <section class="universes" id="universos" aria-label="Conheça os universos">
-      <article class="book-feature feature-terra" id="terra">
-        <div class="feature-backdrop">
-          <img src="assets/images/terra-braen.webp" alt="" width="1448" height="1086" loading="lazy" decoding="async">
-        </div>
-        <div class="feature-overlay" aria-hidden="true"></div>
-        <div class="container feature-layout">
-          <div class="feature-cover reveal">
-            <img src="assets/images/cover-terra.webp" alt="Capa de A Terra dos Monstros" width="563" height="800" loading="lazy" decoding="async">
+    <section class="prototype-section" id="personagens">
+      <div class="container">
+        <div class="prototype-heading reveal">
+          <div>
+            <p class="eyebrow">Rostos da travessia</p>
+            <h2>Personagens em caminhos extremos.</h2>
           </div>
-          <div class="feature-copy reveal">
-            <p class="eyebrow">Das Histórias de Mentel</p>
-            <h2>A Terra dos Monstros</h2>
-            <p class="feature-hook">“Eles acreditam que os muros nos protegem. Mas e se estiverem apenas nos trancando aqui dentro?”</p>
-            <p>
-              Em Avoltera, os sobreviventes se escondem em cidades-fortaleza, separados das criaturas que
-              dominam as florestas. Quando uma fera rompe as defesas de Braen, Melina é empurrada para além
-              de tudo o que conhecia e encontra verdades mais perigosas do que os próprios monstros.
-            </p>
-            <div class="feature-tags" aria-label="Temas">
-              <span>Sobrevivência</span>
-              <span>Fantasia sombria</span>
-              <span>Mistério</span>
-            </div>
-            <div class="feature-actions">
-              <a class="button button-preview" href="a-terra-dos-monstros/previa/">
-                Leia o primeiro capítulo grátis <span aria-hidden="true">→</span>
-              </a>
-              <a class="button button-terra" href="https://loja.uiclap.com/titulo/ua145914" target="_blank" rel="noopener noreferrer">
-                Comprar na UICLAP <span aria-hidden="true">↗</span>
-              </a>
-            </div>
-          </div>
+          <p>Alguns buscam respostas, outros sobrevivem ao que fizeram deles. O ponto em comum Ã© a travessia: cada personagem Ã© levado a encarar um limite diferente do prÃ³prio mundo.</p>
         </div>
-      </article>
 
-      <article class="book-feature feature-elemental" id="elemental">
-        <div class="feature-backdrop">
-          <img src="assets/images/elemental-retorno.webp" alt="" width="1448" height="1086" loading="lazy" decoding="async">
-        </div>
-        <div class="feature-overlay" aria-hidden="true"></div>
-        <div class="container feature-layout feature-layout-reverse">
-          <div class="feature-cover reveal">
-            <img src="assets/images/cover-elemental.webp" alt="Capa de As Histórias de Mentel: Elemental" width="564" height="800" loading="lazy" decoding="async">
-          </div>
-          <div class="feature-copy reveal">
-            <p class="eyebrow">O marco zero das Histórias de Mentel</p>
-            <h2>Elemental</h2>
-            <p class="feature-hook">Uma linhagem perdida. Uma guerra interestelar. Um encontro improvável no sertão.</p>
-            <p>
-              Após a queda de Mendels, William é lançado ao espaço como o último portador da linhagem Weresp.
-              Sua rota termina na Terra, onde tecnologia alienígena, uma fenda instável e a ajuda de Beyoncé,
-              uma jovem humana, tornam-se sua única chance de escapar do comandante que veio exterminá-lo.
-            </p>
-            <div class="feature-tags" aria-label="Temas">
-              <span>Space opera</span>
-              <span>Caatinga</span>
-              <span>Legado</span>
-            </div>
-            <div class="feature-actions">
-              <a class="button button-preview" href="elemental/previa/">
-                Leia trechos grátis <span aria-hidden="true">→</span>
-              </a>
-              <a class="button button-elemental" href="https://loja.uiclap.com/titulo/ua151952" target="_blank" rel="noopener noreferrer">
-                Comprar na UICLAP <span aria-hidden="true">↗</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </article>
+        <div class="character-grid">
+          <article class="character-card reveal" style="background-image:url('assets/images/terra-invasao.webp')">
+            <span class="character-meta">A Terra dos Monstros</span>
+            <h3>Melina / Melindra Mayey</h3>
+            <p>Uma jovem de Braen que cresceu entre escassez, vigilÃ¢ncia e muralhas. Seu desejo de entender o que existe alÃ©m das fronteiras pode colocÃ¡-la diante de verdades perigosas.</p>
+            <blockquote>â€œAs muralhas protegem. Mas tambÃ©m escondem.â€</blockquote>
+          </article>
 
-      <article class="book-feature feature-veter" id="veter">
-        <div class="feature-backdrop">
-          <img src="assets/images/veter-emergindo.webp" alt="" width="1500" height="1000" loading="lazy" decoding="async">
+          <article class="character-card reveal" style="background-image:url('assets/images/elemental-retorno.webp')">
+            <span class="character-meta">Elemental</span>
+            <h3>BeyoncÃ© SimÃµes</h3>
+            <p>Do sertÃ£o pernambucano para uma guerra ancestral entre mundos, ela Ã© arrastada para uma histÃ³ria maior do que qualquer explicaÃ§Ã£o simples poderia conter.</p>
+            <blockquote>â€œO cÃ©u caiu perto demais da Terra.â€</blockquote>
+          </article>
+
+          <article class="character-card reveal" style="background-image:url('assets/images/elemental-fenda.webp')">
+            <span class="character-meta">Elemental</span>
+            <h3>O herdeiro de Mendels</h3>
+            <p>Um estranho vindo de uma linhagem perdida, carregando marcas de uma guerra que atravessa estrelas, nomes antigos e poderes elementares.</p>
+            <blockquote>â€œAlgumas quedas parecem acidente. Outras parecem destino.â€</blockquote>
+          </article>
+
+          <article class="character-card reveal" style="background-image:url('assets/images/veter-templo.webp')">
+            <span class="character-meta">Veter</span>
+            <h3>Veter Foxsale</h3>
+            <p>Um entregador comum em Belonia, preso a uma rotina Ã¡spera, atÃ© que uma tentativa de cura o coloca no centro de uma transformaÃ§Ã£o imprevisÃ­vel.</p>
+            <blockquote>â€œA cura devolveu movimento. O preÃ§o veio depois.â€</blockquote>
+          </article>
         </div>
-        <div class="feature-overlay" aria-hidden="true"></div>
-        <div class="container feature-layout">
-          <div class="feature-cover reveal">
-            <img src="assets/images/cover-veter.webp" alt="Capa de Veter" width="564" height="800" loading="lazy" decoding="async">
+
+        <div class="note-grid">
+          <article class="note-card reveal">
+            <h3>Melina</h3>
+            <p>Entre a obediÃªncia Ã s muralhas e o chamado da floresta, ela precisa descobrir se sobreviver tambÃ©m significa desobedecer.</p>
+          </article>
+          <article class="note-card reveal">
+            <h3>BeyoncÃ©</h3>
+            <p>Uma garota do sertÃ£o pernambucano atravessada por uma guerra antiga, onde o cÃ©u, a Terra e Mendels deixam de ser mundos separados.</p>
+          </article>
+          <article class="note-card reveal">
+            <h3>Veter</h3>
+            <p>Um corpo devolvido ao movimento, uma humanidade colocada em dÃºvida e uma forÃ§a que cresce mais rÃ¡pido do que qualquer controle.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="prototype-section" id="mundos">
+      <div class="container">
+        <div class="prototype-heading reveal">
+          <div>
+            <p class="eyebrow">TerritÃ³rios e fronteiras</p>
+            <h2>Mapa dos mundos.</h2>
           </div>
-          <div class="feature-copy reveal">
-            <p class="eyebrow">Das Histórias de Mentel</p>
-            <h2>Veter</h2>
-            <p class="feature-hook">A cura devolveu seus movimentos. O experimento tirou sua antiga humanidade.</p>
-            <p>
-              Na desigual Belonia, Veter Foxsale é um entregador que abandonou o sonho de explorar as estrelas.
-              Depois de um acidente devastador, uma organização científica oferece uma cura. O procedimento
-              funciona, mas o transforma em uma força que seus criadores já não conseguem controlar.
-            </p>
-            <div class="feature-tags" aria-label="Temas">
-              <span>Conspiração</span>
-              <span>Biotecnologia</span>
-              <span>Anti-herói</span>
-            </div>
-            <div class="feature-actions">
-              <a class="button button-preview" href="veter/previa/">
-                Leia o primeiro capítulo grátis <span aria-hidden="true">→</span>
-              </a>
-              <a class="button button-veter" href="https://loja.uiclap.com/titulo/ua152387" target="_blank" rel="noopener noreferrer">
-                Comprar na UICLAP <span aria-hidden="true">↗</span>
-              </a>
-            </div>
+          <p>Os mundos das histÃ³rias se organizam por fronteiras: cidades contra florestas, Terra contra Mendels, tecnologia contra corpo. O perigo quase sempre comeÃ§a quando alguÃ©m atravessa uma linha proibida.</p>
+        </div>
+
+        <div class="world-map">
+          <div class="world-column">
+            <article class="world-node reveal" style="background-image:url('assets/images/terra-braen.webp')">
+              <p class="eyebrow">Avoltera</p>
+              <h3>Braen e as cidades-fortaleza</h3>
+              <p>Um mundo cercado por muralhas, escassez e criaturas que transformaram a sobrevivÃªncia em rotina.</p>
+              <ul class="tag-row">
+                <li>Muralhas</li>
+                <li>Floresta</li>
+                <li>Monstros</li>
+              </ul>
+            </article>
+
+            <article class="world-node reveal" style="background-image:url('assets/images/terra-fera.webp')">
+              <p class="eyebrow">AlÃ©m das fronteiras</p>
+              <h3>A floresta</h3>
+              <p>O territÃ³rio do medo, daquilo que a cidade tenta manter distante e do que talvez explique a origem das ameaÃ§as.</p>
+            </article>
+          </div>
+
+          <div class="world-spine reveal"><span>Universos de Willian Quirino</span></div>
+
+          <div class="world-column">
+            <article class="world-node reveal" style="background-image:url('assets/images/elemental-retorno.webp')">
+              <p class="eyebrow">Elemental</p>
+              <h3>Terra, Pernambuco e Mendels</h3>
+              <p>O sertÃ£o encontra uma guerra interestelar. A queda de um estranho abre a passagem entre mundos e linhagens.</p>
+              <ul class="tag-row">
+                <li>SertÃ£o</li>
+                <li>Mundos</li>
+                <li>Legado</li>
+              </ul>
+            </article>
+
+            <article class="world-node reveal" style="background-image:url('assets/images/veter-emergindo.webp')">
+              <p class="eyebrow">Veter</p>
+              <h3>Belonia</h3>
+              <p>Uma metrÃ³pole distÃ³pica, tecnolÃ³gica e emocional, onde acidentes, experimentos e perdas mudam o corpo e a identidade.</p>
+              <ul class="tag-row">
+                <li>MetrÃ³pole</li>
+                <li>Experimento</li>
+                <li>TransformaÃ§Ã£o</li>
+              </ul>
+            </article>
           </div>
         </div>
-      </article>
+
+        <div class="note-grid">
+          <article class="note-card reveal">
+            <h3>Avoltera</h3>
+            <p>Um mundo de sobreviventes, cidades-fortaleza e florestas tomadas por criaturas. O medo ali nÃ£o vive apenas fora dos muros.</p>
+          </article>
+          <article class="note-card reveal">
+            <h3>Mendels</h3>
+            <p>Uma linhagem perdida, poderes elementares e uma guerra que alcanÃ§a a Terra atravÃ©s de uma queda no sertÃ£o pernambucano.</p>
+          </article>
+          <article class="note-card reveal">
+            <h3>Belonia</h3>
+            <p>Uma metrÃ³pole de tecnologia e desigualdade, onde a promessa de cura abre espaÃ§o para algo mais intenso, perigoso e incontrolÃ¡vel.</p>
+          </article>
+        </div>
+      </div>
     </section>
 
     <section class="section soundtracks-section" id="trilhas" aria-labelledby="trilhas-title">
@@ -332,36 +867,23 @@
         <div class="section-heading section-heading-split reveal">
           <div>
             <p class="eyebrow">Mundos para ler e ouvir</p>
-            <h2 id="trilhas-title">As histórias também têm trilha sonora</h2>
+            <h2 id="trilhas-title">As histÃ³rias tambÃ©m tÃªm trilha sonora</h2>
           </div>
-          <p>
-            Compostas para acompanhar a atmosfera de cada universo, as trilhas expandem
-            a experiência dos livros para além das páginas.
-          </p>
+          <p>As mÃºsicas ampliam a atmosfera dos livros: a tensÃ£o das muralhas em A Terra dos Monstros e a energia urbana de Veter.</p>
         </div>
 
         <div class="soundtrack-grid">
           <article class="soundtrack-card soundtrack-terra reveal">
             <div class="soundtrack-card-head">
-              <img src="assets/images/cover-terra.webp" alt="Capa de A Terra dos Monstros" width="563" height="800" loading="lazy" decoding="async">
+              <img src="assets/images/cover-terra-current.jpg" alt="Capa de A Terra dos Monstros" width="900" height="1273" loading="lazy" decoding="async">
               <div>
                 <p class="soundtrack-label"><span aria-hidden="true"></span> Trilha sonora original</p>
                 <h3>A Terra dos Monstros</h3>
-                <p>Uma paisagem sonora sombria para atravessar as muralhas de Avoltera.</p>
+                <p>Sombria, atmosfÃ©rica e tensa, feita para acompanhar a vida dentro das muralhas e o medo da floresta.</p>
               </div>
             </div>
-            <iframe
-              class="spotify-player"
-              src="https://open.spotify.com/embed/album/6ZWQOwftjpiECe2zX6UdA5?utm_source=generator&theme=0"
-              title="Terra dos Monstros, trilha sonora original no Spotify"
-              width="100%"
-              height="352"
-              loading="lazy"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            ></iframe>
-            <a class="spotify-link" href="https://open.spotify.com/album/6ZWQOwftjpiECe2zX6UdA5" target="_blank" rel="noopener noreferrer">
-              Abrir álbum no Spotify <span aria-hidden="true">↗</span>
-            </a>
+            <iframe class="spotify-player" src="https://open.spotify.com/embed/album/6ZWQOwftjpiECe2zX6UdA5?utm_source=generator&theme=0" title="Trilha sonora de A Terra dos Monstros no Spotify" width="100%" height="352" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+            <a class="spotify-link" href="https://open.spotify.com/album/6ZWQOwftjpiECe2zX6UdA5" target="_blank" rel="noopener noreferrer">Abrir Ã¡lbum no Spotify <span aria-hidden="true">â†—</span></a>
           </article>
 
           <article class="soundtrack-card soundtrack-veter reveal">
@@ -370,65 +892,17 @@
               <div>
                 <p class="soundtrack-label"><span aria-hidden="true"></span> Trilha sonora original</p>
                 <h3>Veter</h3>
-                <p>Tensão, transformação e energia para acompanhar a origem do anti-herói.</p>
+                <p>Urbana, distÃ³pica e emocional, acompanhando transformaÃ§Ã£o, perda e uma forÃ§a incontrolÃ¡vel.</p>
               </div>
             </div>
-            <iframe
-              class="spotify-player"
-              src="https://open.spotify.com/embed/album/4aqvhBNZdb1g7GXYm2HLyO?utm_source=generator&theme=0"
-              title="Veter, trilha sonora original no Spotify"
-              width="100%"
-              height="352"
-              loading="lazy"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            ></iframe>
-            <a class="spotify-link" href="https://open.spotify.com/album/4aqvhBNZdb1g7GXYm2HLyO" target="_blank" rel="noopener noreferrer">
-              Abrir álbum no Spotify <span aria-hidden="true">↗</span>
-            </a>
+            <iframe class="spotify-player" src="https://open.spotify.com/embed/album/4aqvhBNZdb1g7GXYm2HLyO?utm_source=generator&theme=0" title="Trilha sonora de Veter no Spotify" width="100%" height="352" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+            <a class="spotify-link" href="https://open.spotify.com/album/4aqvhBNZdb1g7GXYm2HLyO" target="_blank" rel="noopener noreferrer">Abrir Ã¡lbum no Spotify <span aria-hidden="true">â†—</span></a>
           </article>
         </div>
+
         <p class="soundtrack-more reveal">
-          <a class="button button-ghost" href="trilhas/">Explorar trilhas e músicas do universo <span aria-hidden="true">→</span></a>
+          <a class="button button-ghost" href="trilhas/">Explorar trilhas e mÃºsicas do universo <span aria-hidden="true">â†’</span></a>
         </p>
-      </div>
-    </section>
-
-    <section class="section gallery-section" id="galeria" aria-labelledby="galeria-title">
-      <div class="container">
-        <div class="section-heading section-heading-split reveal">
-          <div>
-            <p class="eyebrow">Por dentro das histórias</p>
-            <h2 id="galeria-title">Um universo também contado por imagens</h2>
-          </div>
-          <p>As edições ilustradas transformam momentos-chave da narrativa em cenas que ampliam a experiência de leitura.</p>
-        </div>
-
-        <div class="gallery-grid">
-          <button class="gallery-item gallery-wide gallery-sketch reveal" type="button" data-lightbox data-src="assets/images/terra-invasao.webp" data-caption="A invasão · A Terra dos Monstros">
-            <img src="assets/images/terra-invasao-960.webp" srcset="assets/images/terra-invasao-640.webp 640w, assets/images/terra-invasao-960.webp 960w, assets/images/terra-invasao.webp 1448w" sizes="(max-width: 700px) calc(100vw - 30px), 66vw" alt="Soldados enfrentam uma enorme criatura diante das muralhas" width="1448" height="1086" loading="lazy" decoding="async">
-            <span><strong>A invasão</strong><small>A Terra dos Monstros</small></span>
-          </button>
-          <button class="gallery-item gallery-tall gallery-sketch reveal" type="button" data-lightbox data-src="assets/images/elemental-fenda.webp" data-caption="Entrando na fenda · Elemental">
-            <img src="assets/images/elemental-fenda-640.webp" srcset="assets/images/elemental-fenda-640.webp 640w, assets/images/elemental-fenda-960.webp 960w, assets/images/elemental-fenda.webp 1122w" sizes="(max-width: 700px) calc(100vw - 30px), 33vw" alt="Nave espacial se aproxima de uma fenda no espaço" width="1122" height="1402" loading="lazy" decoding="async">
-            <span><strong>Entrando na fenda</strong><small>Elemental</small></span>
-          </button>
-          <button class="gallery-item reveal" type="button" data-lightbox data-src="assets/images/veter-templo.webp" data-caption="O templo · Veter">
-            <img src="assets/images/veter-templo-640.webp" srcset="assets/images/veter-templo-640.webp 640w, assets/images/veter-templo-960.webp 960w, assets/images/veter-templo.webp 1024w" sizes="(max-width: 700px) calc(100vw - 30px), 33vw" alt="Homem diante de uma enorme porta de templo" width="1024" height="1024" loading="lazy" decoding="async">
-            <span><strong>O templo</strong><small>Veter</small></span>
-          </button>
-          <button class="gallery-item gallery-sketch reveal" type="button" data-lightbox data-src="assets/images/terra-fera.webp" data-caption="A grande fera · A Terra dos Monstros">
-            <img src="assets/images/terra-fera-640.webp" srcset="assets/images/terra-fera-640.webp 640w, assets/images/terra-fera-960.webp 960w, assets/images/terra-fera.webp 1536w" sizes="(max-width: 700px) calc(100vw - 30px), 33vw" alt="Soldado encara uma grande criatura entre as árvores" width="1536" height="1024" loading="lazy" decoding="async">
-            <span><strong>A grande fera</strong><small>A Terra dos Monstros</small></span>
-          </button>
-          <button class="gallery-item gallery-wide gallery-sketch reveal" type="button" data-lightbox data-src="assets/images/elemental-retorno.webp" data-caption="Estação de comando · Elemental">
-            <img src="assets/images/elemental-retorno-960.webp" srcset="assets/images/elemental-retorno-640.webp 640w, assets/images/elemental-retorno-960.webp 960w, assets/images/elemental-retorno.webp 1448w" sizes="(max-width: 700px) calc(100vw - 30px), 66vw" alt="Homem observa uma grande projeção na estação de comando" width="1448" height="1086" loading="lazy" decoding="async">
-            <span><strong>Estação de comando</strong><small>Elemental</small></span>
-          </button>
-          <button class="gallery-item reveal" type="button" data-lightbox data-src="assets/images/veter-fera.webp" data-caption="A fera escura · Veter">
-            <img src="assets/images/veter-fera-640.webp" srcset="assets/images/veter-fera-640.webp 640w, assets/images/veter-fera-960.webp 960w, assets/images/veter-fera.webp 1500w" sizes="(max-width: 700px) calc(100vw - 30px), 33vw" alt="Homem enfrenta uma fera escura" width="1500" height="1000" loading="lazy" decoding="async">
-            <span><strong>A fera escura</strong><small>Veter</small></span>
-          </button>
-        </div>
       </div>
     </section>
 
@@ -444,36 +918,15 @@
 
         <div class="author-copy reveal">
           <p class="eyebrow">Sobre o autor</p>
-          <h2 id="autor-title">Imaginar foi o começo.<br>Persistir fez o universo crescer.</h2>
-          <p>
-            Willian Quirino é o criador das <strong>Histórias de Mentel</strong>, um universo que reúne ficção
-            científica, fantasia, mundos distantes e personagens em transformação.
-          </p>
-          <p>
-            A primeira ideia de <em>Elemental</em> nasceu em 2006, quando o autor tinha dez anos. Depois de uma
-            longa pausa provocada por um problema de saúde em 2012, ele retomou a escrita e transformou aquele
-            projeto de infância em uma série de livros publicados.
-          </p>
-          <p>
-            Suas obras combinam narrativa, ilustrações e trilhas sonoras para criar uma leitura imersiva,
-            conectando diferentes histórias dentro de um mesmo universo em expansão.
-          </p>
-          <a class="text-link author-link" href="autor/">
-            Conhecer a trajetória do autor <span aria-hidden="true">→</span>
-          </a>
+          <h2 id="autor-title">Imaginar foi o comeÃ§o.<br>Persistir fez o universo crescer.</h2>
+          <p>Willian Quirino Ã© autor de obras de fantasia, ficÃ§Ã£o cientÃ­fica e mundos marcados por conflitos, memÃ³rias, sobrevivÃªncia e transformaÃ§Ã£o.</p>
+          <p>Suas histÃ³rias nasceram em antigos diÃ¡rios manuscritos e voltaram Ã  vida anos depois como livros ilustrados, trilhas sonoras e universos em expansÃ£o.</p>
+          <p>Para Willian, cada obra nÃ£o se limita apenas Ã s pÃ¡ginas: ela tambÃ©m pode ser sentida por meio de imagens, sons e emoÃ§Ãµes.</p>
+          <div class="feature-actions">
+            <a class="button button-primary" href="autor/">Conhecer a trajetÃ³ria</a>
+            <a class="button button-ghost" href="trilhas/">Ouvir as trilhas</a>
+          </div>
         </div>
-      </div>
-    </section>
-
-    <section class="final-cta" aria-labelledby="cta-title">
-      <div class="final-cta-bg" aria-hidden="true"></div>
-      <div class="container reveal">
-        <p class="eyebrow">A próxima página começa aqui</p>
-        <h2 id="cta-title">Qual mundo você vai explorar primeiro?</h2>
-        <p>Conheça as edições impressas e escolha sua próxima leitura na loja oficial.</p>
-        <a class="button button-primary" href="https://loja.uiclap.com/pesquisa=Willian%20Quirino" target="_blank" rel="noopener noreferrer">
-          Visitar a loja UICLAP <span aria-hidden="true">↗</span>
-        </a>
       </div>
     </section>
   </main>
@@ -483,30 +936,47 @@
       <div>
         <a class="brand footer-brand" href="#inicio">
           <span class="brand-mark" aria-hidden="true">WQ</span>
-          <span class="brand-copy"><strong>Willian Quirino</strong><small>Histórias de Mentel</small></span>
+          <span class="brand-copy"><strong>Willian Quirino</strong><small>Autor</small></span>
         </a>
-        <p>Ficção, fantasia e mundos ilustrados.</p>
+        <p>FicÃ§Ã£o cientÃ­fica, fantasia sombria e mundos ilustrados.</p>
       </div>
-      <nav aria-label="Links do rodapé">
-        <a href="#livros">Livros</a>
-        <a href="universos/">Universos</a>
-        <a href="trilhas/">Trilhas</a>
-        <a href="#galeria">Galeria</a>
-        <a href="autor/">Autor</a>
+      <nav aria-label="Links da pÃ¡gina">
+        <a href="#comecar">ComeÃ§ar</a>
+        <a href="#personagens">Personagens</a>
+        <a href="#mundos">Mundos</a>
+        <a href="#trilhas">Trilhas</a>
+        <a href="#autor">Autor</a>
+        <a href="#inicio">InÃ­cio</a>
         <a href="https://loja.uiclap.com/pesquisa=Willian%20Quirino" target="_blank" rel="noopener noreferrer">UICLAP</a>
       </nav>
-      <p class="copyright">© <span data-year></span> Willian Quirino.</p>
+      <p class="copyright">Livros e universos de Willian Quirino.</p>
     </div>
   </footer>
-
-  <dialog class="lightbox" data-lightbox-dialog aria-label="Visualização da ilustração">
-    <button class="lightbox-close" type="button" data-lightbox-close aria-label="Fechar imagem">×</button>
-    <figure>
-      <img src="" alt="" data-lightbox-image>
-      <figcaption data-lightbox-caption></figcaption>
-    </figure>
-  </dialog>
-
   <script src="assets/script.js?v=20260616-1"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Willian Quirino",
+          "url": "https://willianquirino.com.br/",
+          "inLanguage": "pt-BR",
+          "description": "Livros, personagens, mundos e trilhas sonoras de Willian Quirino."
+        },
+        {
+          "@type": "Person",
+          "name": "Willian Quirino",
+          "url": "https://willianquirino.com.br/autor/",
+          "image": "https://willianquirino.com.br/assets/images/autor-willian.webp",
+          "jobTitle": "Autor, ilustrador e compositor",
+          "sameAs": [
+            "https://loja.uiclap.com/pesquisa=Willian%20Quirino"
+          ]
+        }
+      ]
+    }
+  </script>
 </body>
 </html>
+
