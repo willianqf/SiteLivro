@@ -50,6 +50,7 @@ ORIGEM DAS ILUSTRAÇÕES DO SITE
 ------------------------------
 
 A Terra dos Monstros / Rabiscos:
+- Figura 62a.png
 - Figura 65a2.png
 - Figura 61.png
 - Figura 47.png

@@ -21,8 +21,13 @@ const books = {
     hook: "Quando as muralhas deixam de ser proteção, o mundo do lado de fora deixa de ser a única ameaça.",
     pages: 458,
     cover: "cover-terra.jpg",
-    hero: "terra-braen.jpg",
+    hero: "terra-cerco.jpg",
     gallery: ["terra-invasao.jpg", "terra-fera.jpg", "terra-braen.jpg"],
+    galleryCaptions: [
+      "A ameaça atravessa as defesas",
+      "O medo que vive além das muralhas",
+      "Braen, uma cidade feita para resistir",
+    ],
     themes: ["Sobrevivência", "Fantasia sombria", "Mistério"],
     buyUrl: "https://loja.uiclap.com/titulo/ua145914",
     spotify: "https://open.spotify.com/album/6ZWQOwftjpiECe2zX6UdA5",
@@ -46,7 +51,7 @@ const books = {
     eyebrow: "Ficção científica e aventura",
     description: "O último herdeiro de Mendels cai no sertão de Pernambuco enquanto uma guerra atravessa as estrelas.",
     hook: "Uma linhagem perdida. Uma guerra interestelar. Um encontro improvável no sertão.",
-    pages: 267,
+    pages: 268,
     cover: "cover-elemental.jpg",
     hero: "elemental-retorno.jpg",
     gallery: ["elemental-fenda.jpg", "elemental-retorno.jpg", "elemental-arte.jpg"],
@@ -55,10 +60,10 @@ const books = {
     accent: "elemental",
     model3d: {
       asset: "elemental",
-      ratio: 1.427,
+      ratio: 1.418,
       depth: 40,
       mobileDepth: 34,
-      imageHeight: 1284,
+      imageHeight: 1276,
       spineWidth: 179,
       spineHeight: 2172,
     },
@@ -69,7 +74,7 @@ const books = {
     eyebrow: "Distopia e super-humano",
     description: "Um entregador sem perspectivas aceita uma cura impossível e desperta transformado em algo imprevisível.",
     hook: "A cura devolveu seus movimentos. O experimento tirou sua antiga humanidade.",
-    pages: 308,
+    pages: 316,
     cover: "cover-veter.jpg",
     hero: "veter-emergindo.jpg",
     gallery: ["veter-emergindo.jpg", "veter-templo.jpg", "veter-fera.jpg"],
@@ -189,6 +194,7 @@ const imageWidths = {
   "elemental-fenda.jpg": 1122,
   "elemental-retorno.jpg": 1448,
   "terra-braen.jpg": 1448,
+  "terra-cerco.jpg": 1448,
   "terra-fera.jpg": 1536,
   "terra-invasao.jpg": 1448,
   "veter-emergindo.jpg": 1500,
@@ -215,7 +221,7 @@ const analyticsTag = `<script async src="https://www.googletagmanager.com/gtag/j
     gtag("config", "${adsId}");
   </script>`;
 
-const head = ({ title, description, canonical, image, structuredData, css = "../assets/styles.css?v=20260615-1", favicon = "../assets/favicon.svg" }) => `
+const head = ({ title, description, canonical, image, structuredData, css = "../assets/styles.css?v=20260730-1", favicon = "../assets/favicon.svg" }) => `
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="${escapeHtml(description)}">
@@ -310,7 +316,7 @@ const bookPage = (key, book) => {
   }];
 
   const soundtrack = book.spotifyEmbed ? `
-      <section class="detail-soundtrack reveal" aria-labelledby="soundtrack-title">
+      <section class="detail-soundtrack reveal" id="trilha" aria-labelledby="soundtrack-title">
         <div>
           <p class="eyebrow">Ouça antes de entrar nesse mundo</p>
           <h2 id="soundtrack-title">Trilha sonora original</h2>
@@ -346,6 +352,43 @@ const bookPage = (key, book) => {
             </div>
           </div>` : `<img src="../assets/images/${webp(book.cover)}" alt="Capa de ${book.title}" width="555" height="800">`;
 
+  const isTerra = key === "terra";
+  const sectionNavigation = isTerra ? `<nav class="detail-route" aria-label="Explore a página">
+      <div class="container detail-route-list">
+        <a href="#historia"><span>01</span><strong>A história</strong></a>
+        <a href="#ilustracoes"><span>02</span><strong>Ilustrações</strong></a>
+        <a href="#trilha"><span>03</span><strong>Trilha sonora</strong></a>
+        <a href="previa/"><span>04</span><strong>Ler grátis</strong></a>
+      </div>
+    </nav>` : "";
+
+  const terraGallery = isTerra ? `<figure class="container terra-feature-art reveal" id="ilustracoes">
+        ${responsiveImage("terra-cerco.jpg", "Uma criatura gigantesca avança contra os defensores de Avoltera")}
+        <figcaption>
+          <span class="eyebrow">A ameaça diante das muralhas</span>
+          <strong>Há coisas que nenhuma fortaleza consegue manter do lado de fora.</strong>
+          <p>As ilustrações oficiais transformam os conflitos de Avoltera em cenas que ampliam a tensão e a escala da jornada.</p>
+        </figcaption>
+      </figure>
+      <div class="container detail-gallery detail-gallery-captioned">
+        ${book.gallery.map((file, index) => `<figure class="reveal">
+          ${responsiveImage(file, book.galleryCaptions[index])}
+          <figcaption><span>0${index + 1}</span>${book.galleryCaptions[index]}</figcaption>
+        </figure>`).join("\n        ")}
+      </div>` : `<div class="container detail-gallery">
+        ${book.gallery.map((file, index) => responsiveImage(file, `Ilustração ${index + 1} do universo de ${displayTitle}`)).join("\n        ")}
+      </div>`;
+
+  const storyHeading = isTerra
+    ? "Do lado de dentro, regras. Do lado de fora, monstros."
+    : `Uma história sobre ${book.themes.map((theme) => theme.toLowerCase()).join(", ")}`;
+
+  const storyCopy = isTerra ? `<p>Em Braen, sobreviver significa confiar em muralhas, vigias e rotinas que não podem falhar. Melina conhece esse mundo por dentro, até que uma fera rompe as defesas e transforma a segurança da cidade em uma pergunta.</p>
+          <p>Entre fantasia sombria e tensão distópica, <em>A Terra dos Monstros</em> acompanha uma jornada sobre medo, pertencimento e as verdades que uma sociedade esconde para continuar de pé.</p>
+          <a class="preview-link" href="previa/">Começar pelo primeiro capítulo <span aria-hidden="true">→</span></a>` : `<p>${book.description}</p>
+          <p>A edição reúne narrativa e ilustrações para transformar momentos centrais da jornada em uma experiência visual.</p>
+          <a class="preview-link" href="previa/">${key === "elemental" ? "Ler os trechos selecionados" : "Começar a leitura gratuita"} <span aria-hidden="true">→</span></a>`;
+
   return `<!doctype html>
 <html lang="pt-BR">
 <head>
@@ -362,7 +405,7 @@ ${head({
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 ${header()}
   <main id="conteudo">
-    <section class="detail-hero">
+    <section class="detail-hero" id="visao-geral">
       <div class="detail-hero-art" style="background-image:url('../assets/images/${webp(book.hero)}')" aria-hidden="true"></div>
       <div class="container detail-hero-layout">
         <div class="detail-cover reveal">
@@ -380,33 +423,32 @@ ${header()}
             <a class="button button-preview" href="previa/">${previewAction} <span aria-hidden="true">→</span></a>
             <a class="button button-${book.accent}" href="${book.buyUrl}" target="_blank" rel="noopener noreferrer">Comprar edição ilustrada <span aria-hidden="true">↗</span></a>
           </div>
+          ${isTerra ? `<p class="detail-availability"><span aria-hidden="true"></span> Livro impresso com ilustrações oficiais</p>` : ""}
         </div>
       </div>
     </section>
 
-    <section class="section detail-story">
+${sectionNavigation}
+
+    <section class="section detail-story${isTerra ? " detail-story-terra" : ""}" id="historia">
       <div class="container detail-story-grid">
         <div class="reveal">
           <p class="eyebrow">Entre neste universo</p>
-          <h2>Uma história sobre ${book.themes.map((theme) => theme.toLowerCase()).join(", ")}</h2>
+          <h2>${storyHeading}</h2>
         </div>
         <div class="detail-story-copy reveal">
-          <p>${book.description}</p>
-          <p>A edição reúne narrativa e ilustrações para transformar momentos centrais da jornada em uma experiência visual.</p>
-          <a class="preview-link" href="previa/">${key === "elemental" ? "Ler os trechos selecionados" : "Começar a leitura gratuita"} <span aria-hidden="true">→</span></a>
+${storyCopy}
         </div>
       </div>
-      <div class="container detail-gallery">
-        ${book.gallery.map((file, index) => responsiveImage(file, `Ilustração ${index + 1} do universo de ${displayTitle}`)).join("\n        ")}
-      </div>
+${terraGallery}
     </section>
 
     ${soundtrack}
 
     <section class="detail-cta">
       <div class="container reveal">
-        <p class="eyebrow">A história continua</p>
-        <h2>Descubra o que existe depois do primeiro capítulo.</h2>
+        <p class="eyebrow">${isTerra ? "A muralha é apenas o começo" : "A história continua"}</p>
+        <h2>${isTerra ? "Entre em Avoltera antes que os portões se fechem." : "Descubra o que existe depois do primeiro capítulo."}</h2>
         <div class="feature-actions">
           <a class="button button-preview" href="previa/">${key === "elemental" ? "Ler trechos grátis" : "Ler capítulo grátis"}</a>
           <a class="button button-${book.accent}" href="${book.buyUrl}" target="_blank" rel="noopener noreferrer">Adquirir ${displayTitle}</a>

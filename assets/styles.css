@@ -1530,6 +1530,107 @@ button {
   color: rgba(255, 255, 255, 0.72);
 }
 
+.detail-availability {
+  display: flex;
+  margin: 22px 0 0;
+  align-items: center;
+  gap: 9px;
+  color: rgba(225, 239, 234, 0.66);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.detail-availability span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 5px rgba(137, 185, 167, 0.1);
+}
+
+.detail-route {
+  position: sticky;
+  z-index: 8;
+  top: var(--header-height);
+  border-block: 1px solid rgba(137, 185, 167, 0.18);
+  background: rgba(4, 12, 14, 0.92);
+  backdrop-filter: blur(18px);
+}
+
+.detail-route-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.detail-route a {
+  display: flex;
+  min-height: 78px;
+  padding: 0 24px;
+  align-items: center;
+  gap: 13px;
+  border-right: 1px solid rgba(137, 185, 167, 0.14);
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 180ms ease, background 180ms ease;
+}
+
+.detail-route a:first-child {
+  border-left: 1px solid rgba(137, 185, 167, 0.14);
+}
+
+.detail-route a span {
+  color: var(--green);
+  font-family: var(--serif);
+  font-size: 1.05rem;
+}
+
+.detail-route a strong {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.detail-route a:hover,
+.detail-route a:focus-visible {
+  color: #fff;
+  background: rgba(137, 185, 167, 0.09);
+}
+
+.detail-terra .detail-hero {
+  min-height: 880px;
+}
+
+.detail-terra .detail-hero-art {
+  background-position: 58% center;
+  filter: grayscale(1) brightness(0.32) contrast(1.28);
+}
+
+.detail-terra .detail-hero::after {
+  background:
+    radial-gradient(circle at 20% 52%, rgba(67, 124, 104, 0.14), transparent 25rem),
+    linear-gradient(90deg, rgba(2, 8, 10, 0.98) 0%, rgba(3, 10, 12, 0.82) 46%, rgba(3, 9, 11, 0.58) 72%, rgba(3, 8, 10, 0.82)),
+    linear-gradient(0deg, var(--bg-deep), transparent 42%);
+}
+
+.detail-terra .detail-cover::before {
+  position: absolute;
+  z-index: -1;
+  inset: 12% -20%;
+  content: "";
+  background: rgba(76, 136, 114, 0.22);
+  filter: blur(65px);
+}
+
+.detail-terra .detail-cover {
+  position: relative;
+}
+
+.detail-terra .detail-intro h1 {
+  max-width: 850px;
+  text-wrap: balance;
+}
+
 .detail-story {
   background:
     radial-gradient(circle at 80% 20%, rgba(46, 106, 125, 0.12), transparent 28rem),
@@ -1574,6 +1675,153 @@ button {
 
 .detail-gallery img:first-child {
   filter: grayscale(0.22);
+}
+
+.detail-story-terra {
+  position: relative;
+  padding-bottom: 120px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 4% 8%, rgba(76, 136, 114, 0.15), transparent 30rem),
+    linear-gradient(180deg, #091317, #060d10 72%);
+}
+
+.detail-story-terra::before {
+  position: absolute;
+  top: 0;
+  right: -9rem;
+  color: rgba(137, 185, 167, 0.035);
+  content: "AVOLTERA";
+  font-family: var(--serif);
+  font-size: clamp(7rem, 17vw, 18rem);
+  letter-spacing: -0.07em;
+  line-height: 0.8;
+  pointer-events: none;
+}
+
+.detail-story-terra .detail-story-grid {
+  position: relative;
+  z-index: 1;
+  grid-template-columns: 1.08fr 0.72fr;
+}
+
+.detail-story-terra .detail-story-copy {
+  padding-top: 12px;
+  font-size: 1.03rem;
+}
+
+.detail-story-terra .detail-story-copy p:first-child::first-letter {
+  float: left;
+  padding: 5px 9px 0 0;
+  color: #d9f0e7;
+  font-family: var(--serif);
+  font-size: 4.6rem;
+  line-height: 0.76;
+}
+
+.terra-feature-art {
+  display: grid;
+  margin-top: 92px;
+  grid-template-columns: minmax(0, 1.6fr) minmax(260px, 0.6fr);
+  border: 1px solid rgba(137, 185, 167, 0.2);
+  background: #d8d8d3;
+  box-shadow: 0 35px 90px rgba(0, 0, 0, 0.38);
+}
+
+.terra-feature-art > img {
+  width: 100%;
+  height: 100%;
+  min-height: 490px;
+  object-fit: cover;
+}
+
+.terra-feature-art figcaption {
+  display: flex;
+  padding: clamp(32px, 5vw, 65px);
+  justify-content: center;
+  flex-direction: column;
+  color: #dfe9e5;
+  background:
+    linear-gradient(155deg, rgba(90, 144, 125, 0.12), transparent 55%),
+    #071114;
+}
+
+.terra-feature-art figcaption strong {
+  margin-top: 10px;
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 3vw, 3.1rem);
+  font-weight: 400;
+  line-height: 1.04;
+}
+
+.terra-feature-art figcaption p {
+  margin-bottom: 0;
+  color: rgba(223, 233, 229, 0.62);
+}
+
+.detail-gallery-captioned {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.detail-gallery-captioned figure {
+  margin: 0;
+  border: 1px solid rgba(137, 185, 167, 0.17);
+  background: rgba(4, 12, 14, 0.62);
+  overflow: hidden;
+}
+
+.detail-gallery-captioned img,
+.detail-gallery-captioned img:first-child {
+  height: 290px;
+  filter: grayscale(0.28);
+  transition: filter 320ms ease, transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.detail-gallery-captioned figure:hover img {
+  filter: grayscale(0);
+  transform: scale(1.025);
+}
+
+.detail-gallery-captioned figcaption {
+  display: flex;
+  min-height: 74px;
+  padding: 17px 19px;
+  align-items: center;
+  gap: 14px;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--serif);
+  font-size: 1rem;
+}
+
+.detail-gallery-captioned figcaption span {
+  color: var(--green);
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+}
+
+.detail-terra .detail-soundtrack {
+  position: relative;
+}
+
+.detail-terra .detail-soundtrack::before {
+  position: absolute;
+  z-index: -1;
+  inset: 50% 58% auto -14vw;
+  height: 360px;
+  content: "";
+  background: rgba(76, 136, 114, 0.13);
+  filter: blur(90px);
+  transform: translateY(-50%);
+}
+
+.detail-terra .detail-cta {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(3, 10, 12, 0.88), rgba(3, 10, 12, 0.96)),
+    url("images/terra-cerco.webp") center 43% / cover;
 }
 
 .detail-soundtrack {
@@ -2401,6 +2649,22 @@ button {
     padding-top: calc(var(--header-height) + 60px);
   }
 
+  .detail-terra .detail-hero {
+    min-height: 0;
+    padding-bottom: 70px;
+  }
+
+  .detail-terra .detail-hero-art {
+    background-position: 52% center;
+    filter: grayscale(1) brightness(0.24) contrast(1.2);
+  }
+
+  .detail-terra .detail-hero::after {
+    background:
+      linear-gradient(180deg, rgba(2, 8, 10, 0.72), rgba(2, 8, 10, 0.96) 58%, var(--bg-deep)),
+      radial-gradient(circle at 50% 24%, rgba(76, 136, 114, 0.14), transparent 22rem);
+  }
+
   .detail-hero-layout,
   .detail-story-grid,
   .detail-soundtrack {
@@ -2444,6 +2708,63 @@ button {
   .detail-gallery img:first-child {
     height: 280px;
     grid-column: auto;
+  }
+
+  .detail-route {
+    top: var(--header-height);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .detail-route::-webkit-scrollbar {
+    display: none;
+  }
+
+  .detail-route-list {
+    display: flex;
+    width: max-content;
+  }
+
+  .detail-route a {
+    min-width: 142px;
+    min-height: 64px;
+    padding: 0 17px;
+  }
+
+  .detail-story-terra {
+    padding-bottom: 90px;
+  }
+
+  .detail-story-terra .detail-story-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-story-terra::before {
+    top: 28px;
+    right: -2rem;
+    font-size: 28vw;
+  }
+
+  .terra-feature-art {
+    margin-top: 60px;
+    grid-template-columns: 1fr;
+  }
+
+  .terra-feature-art > img {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
+
+  .terra-feature-art figcaption {
+    padding: 30px 25px 34px;
+  }
+
+  .detail-gallery-captioned {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-gallery-captioned figcaption {
+    min-height: 68px;
   }
 
   .detail-soundtrack {
