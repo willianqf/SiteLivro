@@ -220,6 +220,8 @@ const analyticsTag = `<script async src="https://www.googletagmanager.com/gtag/j
     gtag("config", "${analyticsId}");
     gtag("config", "${adsId}");
   </script>`;
+const adsenseTag = `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1620158714396057"
+  crossorigin="anonymous"></script>`;
 
 const head = ({ title, description, canonical, image, structuredData, css = "../assets/styles.css?v=20260730-1", favicon = "../assets/favicon.svg" }) => `
   <meta charset="utf-8">
@@ -244,6 +246,7 @@ const head = ({ title, description, canonical, image, structuredData, css = "../
   <title>${escapeHtml(title)}</title>
   <link rel="icon" href="${favicon}" type="image/svg+xml">
   <link rel="stylesheet" href="${css}">
+  ${adsenseTag}
   ${analyticsTag}
   ${structuredData.map(jsonLd).join("\n  ")}`;
 
