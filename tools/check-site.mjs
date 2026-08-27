@@ -65,9 +65,6 @@ for (const file of htmlFiles) {
     report(file, "script de rastreamento carregado diretamente no HTML");
   }
 
-  if (/<iframe[^>]+src=["'][^"']*open\.spotify\.com/i.test(html)) {
-    report(file, "player do Spotify carregado sem ação do visitante");
-  }
 }
 
 const home = fs.readFileSync(path.join(root, "index.html"), "utf8");

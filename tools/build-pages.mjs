@@ -234,7 +234,7 @@ const responsiveImage = (file, alt) => {
 const jsonLd = (data) =>
   `<script type="application/ld+json">${JSON.stringify(data)}</script>`;
 
-const head = ({ title, description, canonical, image, structuredData, css = "../assets/styles.css?v=20260827-1", favicon = "../assets/favicon.svg", assetPrefix = "../" }) => `
+const head = ({ title, description, canonical, image, structuredData, css = "../assets/styles.css?v=20260827-2", favicon = "../assets/favicon.svg", assetPrefix = "../" }) => `
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="${escapeHtml(description)}">
@@ -301,7 +301,7 @@ const footer = (prefix = "../") => `
       <p class="copyright">© <span data-year></span> Willian Quirino.</p>
     </div>
   </footer>
-  <script src="${prefix}assets/script.js?v=20260827-1"></script>`;
+  <script src="${prefix}assets/script.js?v=20260827-2"></script>`;
 
 const breadcrumbs = (items) => jsonLd({
   "@context": "https://schema.org",
@@ -368,9 +368,7 @@ const bookPage = (key, book) => {
           <p>${book.soundtrackDescription}</p>
           <a class="text-link" href="${book.spotify}" target="_blank" rel="noopener noreferrer">Abrir álbum no Spotify <span aria-hidden="true">↗</span></a>
         </div>
-        <div class="spotify-embed-shell" data-spotify-embed data-spotify-src="${book.spotifyEmbed}" data-spotify-title="Trilha sonora de ${displayTitle} no Spotify">
-          <button type="button" class="spotify-load-button">Carregar player do Spotify <small>O conteúdo externo será carregado somente após este clique.</small></button>
-        </div>
+        <iframe class="spotify-player" src="${book.spotifyEmbed.replaceAll("&", "&amp;")}" title="Trilha sonora de ${displayTitle} no Spotify" width="100%" height="352" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
       </section>` : "";
   const cover = book.model3d ? `<div
             class="book-3d-shell"
@@ -765,7 +763,7 @@ const privacyPage = simplePage({
       <h3>Necessários</h3><p>Guardam localmente sua preferência de privacidade e permitem o funcionamento básico do site. Não podem ser desativados.</p>
       <h3>Analíticos</h3><p>Quando autorizados, o Google Analytics ajuda a medir páginas visitadas e interações de forma agregada.</p>
       <h3>Publicidade</h3><p>Quando autorizados, Google Ads e Google AdSense podem medir campanhas e oferecer publicidade. Esses serviços podem tratar identificadores e dados técnicos conforme suas próprias políticas.</p>
-      <h3>Conteúdo externo</h3><p>Players do Spotify só são carregados após um clique explícito. Links para Amazon, UICLAP e plataformas musicais abrem serviços de terceiros, sujeitos às políticas dessas empresas.</p>
+      <h3>Conteúdo externo</h3><p>Os players incorporados do Spotify são carregados automaticamente quando se aproximam da área visível da página. O Spotify pode tratar dados técnicos conforme sua própria política. Links para Amazon, UICLAP e plataformas musicais também abrem serviços de terceiros.</p>
       <h2>Como mudar sua escolha</h2><p>Use o botão abaixo ou o link “Cookies” no rodapé. A nova preferência passa a valer imediatamente; para interromper recursos já carregados, recarregue a página.</p>
       <p><button class="button button-primary" type="button" data-cookie-settings>Gerenciar cookies</button></p>
       <h2>Contato</h2><p>Dúvidas sobre privacidade podem ser encaminhadas pelos canais oficiais do autor disponíveis nas páginas da Amazon e da UICLAP.</p>
@@ -775,9 +773,7 @@ const privacyPage = simplePage({
 const musicCards = Object.values(books).filter((book) => book.spotify).map((book) => `
   <article class="soundtrack-card soundtrack-${book.accent} reveal">
     <div class="soundtrack-card-head"><img src="../assets/images/${webp(book.cover)}" alt="Capa de ${book.title}" width="555" height="800" loading="lazy" decoding="async"><div><p class="soundtrack-label"><span></span> Trilha sonora original</p><h2>${book.shortTitle || book.title}</h2><p>${book.soundtrackDescription}</p></div></div>
-    <div class="spotify-embed-shell" data-spotify-embed data-spotify-src="${book.spotifyEmbed}" data-spotify-title="Trilha sonora de ${book.title} no Spotify">
-      <button type="button" class="spotify-load-button">Carregar player do Spotify <small>O conteúdo externo será carregado somente após este clique.</small></button>
-    </div>
+    <iframe class="spotify-player" src="${book.spotifyEmbed.replaceAll("&", "&amp;")}" title="Trilha sonora de ${book.title} no Spotify" width="100%" height="352" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
     <a class="spotify-link" href="${book.spotify}" target="_blank" rel="noopener noreferrer">Ouvir no Spotify <span aria-hidden="true">↗</span></a>
   </article>`).join("");
 

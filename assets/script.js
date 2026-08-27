@@ -349,22 +349,6 @@ lightbox?.addEventListener("click", (event) => {
   if (isOutside) lightbox.close();
 });
 
-document.querySelectorAll("[data-spotify-embed]").forEach((shell) => {
-  const button = shell.querySelector("[data-spotify-load], .spotify-load-button");
-  button?.addEventListener("click", () => {
-    const iframe = document.createElement("iframe");
-    iframe.className = "spotify-player";
-    iframe.src = shell.dataset.spotifySrc;
-    iframe.title = shell.dataset.spotifyTitle || "Player do Spotify";
-    iframe.width = "100%";
-    iframe.height = "352";
-    iframe.loading = "lazy";
-    iframe.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
-    shell.replaceChildren(iframe);
-    trackEvent("spotify_embed_load", { title: iframe.title });
-  });
-});
-
 const deferredBackgrounds = document.querySelectorAll("[data-bg-image]");
 const loadBackground = (element) => {
   const suffix = window.innerWidth <= 700 ? "-640.webp" : "-960.webp";

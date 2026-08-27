@@ -32,7 +32,8 @@ SEO E DESEMPENHO
   responsivas de 640 e 960 pixels.
 - Os JPG originais foram mantidos para compatibilidade e compartilhamento.
 - Google Analytics e AdSense só são carregados depois do consentimento.
-- Players do Spotify só são carregados depois de um clique do visitante.
+- Players do Spotify usam carregamento adiado e aparecem automaticamente
+  quando se aproximam da área visível.
 
 Links de compra utilizados:
 - A Terra dos Monstros:
