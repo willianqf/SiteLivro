@@ -12,6 +12,9 @@ vm.createContext(context);
 vm.runInContext(source, context);
 const previews = context.window.BOOK_PREVIEWS;
 
+const amazonAuthor = "https://www.amazon.com.br/stores/Willian-Quirino/author/B0HGM36S9W";
+const catalogUpdated = "2026-08-27";
+
 const books = {
   terra: {
     slug: "a-terra-dos-monstros",
@@ -30,6 +33,13 @@ const books = {
     ],
     themes: ["Sobrevivência", "Fantasia sombria", "Mistério"],
     buyUrl: "https://loja.uiclap.com/titulo/ua145914",
+    uiclapId: "ua145914",
+    printPrice: 57.45,
+    publicationDate: "2026-01-20",
+    dimensions: "15,4 × 21,9 cm",
+    printDetails: "Preto e branco em papel offset · capa brilho",
+    kindleUrl: "https://www.amazon.com.br/dp/B0H4BVMK8Z",
+    kindleAsin: "B0H4BVMK8Z",
     spotify: "https://open.spotify.com/album/6ZWQOwftjpiECe2zX6UdA5",
     spotifyEmbed: "https://open.spotify.com/embed/album/6ZWQOwftjpiECe2zX6UdA5?utm_source=generator&theme=0",
     soundtrackDescription: "Uma trilha sombria, atmosférica e tensa, criada para acompanhar a vida dentro das muralhas e o medo que atravessa a floresta.",
@@ -57,6 +67,13 @@ const books = {
     gallery: ["elemental-fenda.jpg", "elemental-retorno.jpg", "elemental-arte.jpg"],
     themes: ["Space opera", "Caatinga", "Legado"],
     buyUrl: "https://loja.uiclap.com/titulo/ua151952",
+    uiclapId: "ua151952",
+    printPrice: 41.88,
+    publicationDate: "2026-02-13",
+    dimensions: "14,8 × 21 cm",
+    printDetails: "Preto e branco em papel offset · capa brilho",
+    kindleUrl: "https://www.amazon.com.br/dp/B0HG5VPLBY",
+    kindleAsin: "B0HG5VPLBY",
     accent: "elemental",
     model3d: {
       asset: "elemental",
@@ -80,6 +97,13 @@ const books = {
     gallery: ["veter-emergindo.jpg", "veter-templo.jpg", "veter-fera.jpg"],
     themes: ["Conspiração", "Biotecnologia", "Anti-herói"],
     buyUrl: "https://loja.uiclap.com/titulo/ua152387",
+    uiclapId: "ua152387",
+    printPrice: 45.82,
+    publicationDate: "2026-02-15",
+    dimensions: "14,8 × 21 cm",
+    printDetails: "Preto e branco em papel offset · capa brilho",
+    kindleUrl: "https://www.amazon.com.br/dp/B0HG62QBZC",
+    kindleAsin: "B0HG62QBZC",
     spotify: "https://open.spotify.com/album/4aqvhBNZdb1g7GXYm2HLyO",
     spotifyEmbed: "https://open.spotify.com/embed/album/4aqvhBNZdb1g7GXYm2HLyO?utm_source=generator&theme=0",
     soundtrackDescription: "Uma trilha urbana, distópica e emocional, conduzida por transformação, perda e uma força que já não pode ser controlada.",
@@ -210,20 +234,7 @@ const responsiveImage = (file, alt) => {
 const jsonLd = (data) =>
   `<script type="application/ld+json">${JSON.stringify(data)}</script>`;
 
-const analyticsId = "G-E9LKKPWMXY";
-const adsId = "AW-17919559276";
-const analyticsTag = `<script async src="https://www.googletagmanager.com/gtag/js?id=${analyticsId}"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag("js", new Date());
-    gtag("config", "${analyticsId}");
-    gtag("config", "${adsId}");
-  </script>`;
-const adsenseTag = `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1620158714396057"
-  crossorigin="anonymous"></script>`;
-
-const head = ({ title, description, canonical, image, structuredData, css = "../assets/styles.css?v=20260730-1", favicon = "../assets/favicon.svg" }) => `
+const head = ({ title, description, canonical, image, structuredData, css = "../assets/styles.css?v=20260827-1", favicon = "../assets/favicon.svg", assetPrefix = "../" }) => `
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="${escapeHtml(description)}">
@@ -246,9 +257,9 @@ const head = ({ title, description, canonical, image, structuredData, css = "../
   <title>${escapeHtml(title)}</title>
   <link rel="icon" href="${favicon}" type="image/svg+xml">
   <link rel="stylesheet" href="${css}">
-  ${adsenseTag}
-  ${analyticsTag}
-  ${structuredData.map(jsonLd).join("\n  ")}`;
+  <link rel="stylesheet" href="${assetPrefix}assets/consent.css?v=20260827-1">
+  <script defer src="${assetPrefix}assets/consent.js?v=20260827-1"></script>
+${structuredData.map((data) => `  ${jsonLd(data)}`).join("\n")}`;
 
 const header = (prefix = "../") => `
   <header class="site-header is-scrolled page-header" data-header>
@@ -260,9 +271,10 @@ const header = (prefix = "../") => `
       <span></span><span></span><span></span><span class="sr-only">Abrir menu</span>
     </button>
     <nav class="site-nav" id="site-nav" aria-label="Navegação principal" data-nav>
-      <a href="${prefix}#livros">Livros</a>
+      <a href="${prefix}#comecar">Livros</a>
       <a href="${prefix}trilhas/">Trilhas</a>
       <a href="${prefix}autor/">O autor</a>
+      <a href="${amazonAuthor}" target="_blank" rel="noopener noreferrer">Kindle</a>
       <a class="nav-cta" href="https://loja.uiclap.com/pesquisa=Willian%20Quirino" target="_blank" rel="noopener noreferrer">Loja UICLAP</a>
     </nav>
   </header>`;
@@ -278,15 +290,18 @@ const footer = (prefix = "../") => `
         <p>Ficção, fantasia e mundos ilustrados.</p>
       </div>
       <nav aria-label="Links do rodapé">
-        <a href="${prefix}#livros">Livros</a>
+        <a href="${prefix}#comecar">Livros</a>
         <a href="${prefix}trilhas/">Trilhas</a>
         <a href="${prefix}autor/">Autor</a>
+        <a href="${amazonAuthor}" target="_blank" rel="noopener noreferrer">Kindle</a>
         <a href="https://loja.uiclap.com/pesquisa=Willian%20Quirino" target="_blank" rel="noopener noreferrer">UICLAP</a>
+        <a href="${prefix}privacidade/">Privacidade</a>
+        <button class="cookie-settings-link" type="button" data-cookie-settings>Cookies</button>
       </nav>
       <p class="copyright">© <span data-year></span> Willian Quirino.</p>
     </div>
   </footer>
-  <script src="${prefix}assets/script.js?v=20260616-1"></script>`;
+  <script src="${prefix}assets/script.js?v=20260827-1"></script>`;
 
 const breadcrumbs = (items) => jsonLd({
   "@context": "https://schema.org",
@@ -308,14 +323,41 @@ const bookPage = (key, book) => {
   const structuredData = [{
     "@context": "https://schema.org",
     "@type": "Book",
+    "@id": `${canonical}#book`,
     name: book.title,
     author: { "@type": "Person", name: "Willian Quirino", url: `${domain}/autor/` },
     description: book.description,
     image,
     inLanguage: "pt-BR",
-    numberOfPages: book.pages,
-    bookFormat: "https://schema.org/Paperback",
     url: canonical,
+    workExample: [
+      {
+        "@type": "Book",
+        "@id": `${canonical}#paperback`,
+        name: `${book.title} — edição impressa ilustrada`,
+        inLanguage: "pt-BR",
+        numberOfPages: book.pages,
+        bookFormat: "https://schema.org/Paperback",
+        datePublished: book.publicationDate,
+        identifier: { "@type": "PropertyValue", propertyID: "UICLAP", value: book.uiclapId },
+        offers: {
+          "@type": "Offer",
+          url: book.buyUrl,
+          priceCurrency: "BRL",
+          price: book.printPrice,
+        },
+      },
+      {
+        "@type": "Book",
+        "@id": `${canonical}#kindle`,
+        name: `${book.title} — Kindle`,
+        inLanguage: "pt-BR",
+        bookFormat: "https://schema.org/EBook",
+        identifier: { "@type": "PropertyValue", propertyID: "ASIN", value: book.kindleAsin },
+        url: book.kindleUrl,
+        sameAs: book.kindleUrl,
+      },
+    ],
   }];
 
   const soundtrack = book.spotifyEmbed ? `
@@ -326,7 +368,9 @@ const bookPage = (key, book) => {
           <p>${book.soundtrackDescription}</p>
           <a class="text-link" href="${book.spotify}" target="_blank" rel="noopener noreferrer">Abrir álbum no Spotify <span aria-hidden="true">↗</span></a>
         </div>
-        <iframe class="spotify-player" src="${book.spotifyEmbed}" title="Trilha sonora de ${displayTitle} no Spotify" width="100%" height="352" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+        <div class="spotify-embed-shell" data-spotify-embed data-spotify-src="${book.spotifyEmbed}" data-spotify-title="Trilha sonora de ${displayTitle} no Spotify">
+          <button type="button" class="spotify-load-button">Carregar player do Spotify <small>O conteúdo externo será carregado somente após este clique.</small></button>
+        </div>
       </section>` : "";
   const cover = book.model3d ? `<div
             class="book-3d-shell"
@@ -409,7 +453,10 @@ ${head({
 ${header()}
   <main id="conteudo">
     <section class="detail-hero" id="visao-geral">
-      <div class="detail-hero-art" style="background-image:url('../assets/images/${webp(book.hero)}')" aria-hidden="true"></div>
+      <picture class="detail-hero-art" aria-hidden="true">
+        <source media="(max-width: 700px)" srcset="../assets/images/${webp(book.hero).replace(".webp", "-640.webp")}">
+        <img src="../assets/images/${webp(book.hero).replace(".webp", "-960.webp")}" alt="" fetchpriority="high" decoding="async">
+      </picture>
       <div class="container detail-hero-layout">
         <div class="detail-cover reveal">
           ${cover}
@@ -424,7 +471,7 @@ ${header()}
           </ul>
           <div class="feature-actions">
             <a class="button button-preview" href="previa/">${previewAction} <span aria-hidden="true">→</span></a>
-            <a class="button button-${book.accent}" href="${book.buyUrl}" target="_blank" rel="noopener noreferrer">Comprar edição ilustrada <span aria-hidden="true">↗</span></a>
+            <a class="button button-${book.accent}" href="#edicoes">Escolher edição <span aria-hidden="true">↓</span></a>
           </div>
           ${isTerra ? `<p class="detail-availability"><span aria-hidden="true"></span> Livro impresso com ilustrações oficiais</p>` : ""}
         </div>
@@ -432,6 +479,38 @@ ${header()}
     </section>
 
 ${sectionNavigation}
+
+    <section class="section edition-section" id="edicoes" aria-labelledby="editions-title">
+      <div class="container">
+        <div class="section-heading section-heading-split reveal">
+          <div><p class="eyebrow">Impresso ou digital</p><h2 id="editions-title">Escolha sua edição</h2></div>
+          <p>A história é a mesma, mas os extras mudam. A edição impressa foi criada como experiência visual; o Kindle oferece a leitura digital.</p>
+        </div>
+        <div class="edition-grid">
+          <article class="edition-card edition-card-print reveal">
+            <p class="edition-kicker">Edição impressa · UICLAP</p>
+            <h3>Livro ilustrado + páginas bônus</h3>
+            <p>Inclui as ilustrações e o conteúdo bônus exclusivos da edição física.</p>
+            <ul class="edition-specs">
+              <li><strong>${book.pages}</strong><span>páginas</span></li>
+              <li><strong>${book.dimensions}</strong><span>formato</span></li>
+              <li><strong>${book.printDetails}</strong><span>acabamento</span></li>
+            </ul>
+            <p class="edition-price"><span>Preço consultado em ${catalogUpdated.split("-").reverse().join("/")}</span><strong>${book.printPrice.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</strong></p>
+            <a class="button button-${book.accent}" href="${book.buyUrl}" target="_blank" rel="noopener noreferrer">Ver preço e entrega na UICLAP <span aria-hidden="true">↗</span></a>
+            <small>Produção, preço final e prazo de entrega são informados pela UICLAP.</small>
+          </article>
+          <article class="edition-card edition-card-kindle reveal">
+            <p class="edition-kicker">eBook · Amazon Kindle</p>
+            <h3>Leitura digital</h3>
+            <p>Disponível para Kindle e aplicativos Kindle. Esta versão não inclui as ilustrações nem as páginas bônus da edição impressa.</p>
+            <ul class="edition-benefits"><li>Leitura imediata após a compra</li><li>Fonte e tamanho ajustáveis</li><li>Sincronização entre dispositivos compatíveis</li></ul>
+            <a class="button button-kindle" href="${book.kindleUrl}" target="_blank" rel="noopener noreferrer">Ver eBook na Amazon <span aria-hidden="true">↗</span></a>
+            <small>Preço e disponibilidade são informados pela Amazon.</small>
+          </article>
+        </div>
+      </div>
+    </section>
 
     <section class="section detail-story${isTerra ? " detail-story-terra" : ""}" id="historia">
       <div class="container detail-story-grid">
@@ -454,7 +533,7 @@ ${terraGallery}
         <h2>${isTerra ? "Entre em Avoltera antes que os portões se fechem." : "Descubra o que existe depois do primeiro capítulo."}</h2>
         <div class="feature-actions">
           <a class="button button-preview" href="previa/">${key === "elemental" ? "Ler trechos grátis" : "Ler capítulo grátis"}</a>
-          <a class="button button-${book.accent}" href="${book.buyUrl}" target="_blank" rel="noopener noreferrer">Adquirir ${displayTitle}</a>
+          <a class="button button-${book.accent}" href="#edicoes">Comparar edições</a>
         </div>
       </div>
     </section>
@@ -502,6 +581,7 @@ ${head({
   image,
   css: "../../assets/reader.css?v=20260614-2",
   favicon: "../../assets/favicon.svg",
+  assetPrefix: "../../",
   structuredData: [{
     "@context": "https://schema.org",
     "@type": "CreativeWork",
@@ -519,7 +599,7 @@ ${head({
   <header class="reader-header">
     <a class="reader-back-link" href="../"><span aria-hidden="true">←</span> Voltar ao livro</a>
     <div class="reader-book-name"><span>Prévia gratuita</span><strong data-reader-title>${book.title}</strong></div>
-    <a class="reader-buy-link" data-reader-buy href="${book.buyUrl}" target="_blank" rel="noopener noreferrer">Comprar edição <span aria-hidden="true">↗</span></a>
+    <a class="reader-buy-link" href="../#edicoes">Escolher edição <span aria-hidden="true">→</span></a>
   </header>
   <main class="reader-main">
     <section class="reader-intro" aria-labelledby="reader-heading">
@@ -567,7 +647,8 @@ ${head({
         </div>
         <aside class="chapter-purchase">
           <p>${isSelectedScenes ? "A história completa continua no livro." : "A história continua no livro completo."}</p>
-          <a href="${book.buyUrl}" target="_blank" rel="noopener noreferrer">Adquirir ${displayTitle} na UICLAP <span aria-hidden="true">↗</span></a>
+          <a href="${book.buyUrl}" target="_blank" rel="noopener noreferrer">Edição impressa ilustrada na UICLAP <span aria-hidden="true">↗</span></a>
+          <a href="${book.kindleUrl}" target="_blank" rel="noopener noreferrer">eBook na Amazon Kindle <span aria-hidden="true">↗</span></a>
           <a href="../">Voltar à página do livro</a>
         </aside>
       </article>
@@ -612,6 +693,7 @@ const authorPage = simplePage({
     description: "Autor de fantasia e ficção científica, criador das Histórias de Mentel.",
     sameAs: [
       appleArtist,
+      amazonAuthor,
       "https://loja.uiclap.com/pesquisa=Willian%20Quirino",
     ],
   }],
@@ -668,10 +750,34 @@ const authorPage = simplePage({
     </section>`,
 });
 
+const privacyPage = simplePage({
+  slug: "privacidade",
+  title: "Privacidade e cookies | Willian Quirino",
+  description: "Saiba como o site de Willian Quirino utiliza armazenamento local, métricas, publicidade e conteúdos externos.",
+  image: `${domain}/assets/images/hero.jpg`,
+  body: `
+    <section class="page-hero privacy-hero section"><div class="container"><p class="eyebrow">Transparência</p><h1>Privacidade e cookies</h1><p>Você escolhe quais recursos não essenciais podem ser carregados durante a visita.</p></div></section>
+    <section class="section privacy-content"><div class="container legal-copy">
+      <p class="legal-updated">Última atualização: 27 de agosto de 2026.</p>
+      <h2>O que este site coleta</h2>
+      <p>O site pode utilizar dados técnicos de navegação para entender visitas, melhorar páginas e medir cliques em prévias, músicas e lojas. Esses recursos permanecem desativados até que você faça uma escolha no aviso de cookies.</p>
+      <h2>Categorias utilizadas</h2>
+      <h3>Necessários</h3><p>Guardam localmente sua preferência de privacidade e permitem o funcionamento básico do site. Não podem ser desativados.</p>
+      <h3>Analíticos</h3><p>Quando autorizados, o Google Analytics ajuda a medir páginas visitadas e interações de forma agregada.</p>
+      <h3>Publicidade</h3><p>Quando autorizados, Google Ads e Google AdSense podem medir campanhas e oferecer publicidade. Esses serviços podem tratar identificadores e dados técnicos conforme suas próprias políticas.</p>
+      <h3>Conteúdo externo</h3><p>Players do Spotify só são carregados após um clique explícito. Links para Amazon, UICLAP e plataformas musicais abrem serviços de terceiros, sujeitos às políticas dessas empresas.</p>
+      <h2>Como mudar sua escolha</h2><p>Use o botão abaixo ou o link “Cookies” no rodapé. A nova preferência passa a valer imediatamente; para interromper recursos já carregados, recarregue a página.</p>
+      <p><button class="button button-primary" type="button" data-cookie-settings>Gerenciar cookies</button></p>
+      <h2>Contato</h2><p>Dúvidas sobre privacidade podem ser encaminhadas pelos canais oficiais do autor disponíveis nas páginas da Amazon e da UICLAP.</p>
+    </div></section>`,
+});
+
 const musicCards = Object.values(books).filter((book) => book.spotify).map((book) => `
   <article class="soundtrack-card soundtrack-${book.accent} reveal">
     <div class="soundtrack-card-head"><img src="../assets/images/${webp(book.cover)}" alt="Capa de ${book.title}" width="555" height="800" loading="lazy" decoding="async"><div><p class="soundtrack-label"><span></span> Trilha sonora original</p><h2>${book.shortTitle || book.title}</h2><p>${book.soundtrackDescription}</p></div></div>
-    <iframe class="spotify-player" src="${book.spotifyEmbed}" title="Trilha sonora de ${book.title} no Spotify" width="100%" height="352" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+    <div class="spotify-embed-shell" data-spotify-embed data-spotify-src="${book.spotifyEmbed}" data-spotify-title="Trilha sonora de ${book.title} no Spotify">
+      <button type="button" class="spotify-load-button">Carregar player do Spotify <small>O conteúdo externo será carregado somente após este clique.</small></button>
+    </div>
     <a class="spotify-link" href="${book.spotify}" target="_blank" rel="noopener noreferrer">Ouvir no Spotify <span aria-hidden="true">↗</span></a>
   </article>`).join("");
 
@@ -746,7 +852,9 @@ for (const [key, book] of Object.entries(books)) {
 
 fs.mkdirSync(path.join(root, "autor"), { recursive: true });
 fs.mkdirSync(path.join(root, "trilhas"), { recursive: true });
+fs.mkdirSync(path.join(root, "privacidade"), { recursive: true });
 fs.writeFileSync(path.join(root, "autor", "index.html"), authorPage, "utf8");
 fs.writeFileSync(path.join(root, "trilhas", "index.html"), musicPage, "utf8");
+fs.writeFileSync(path.join(root, "privacidade", "index.html"), privacyPage, "utf8");
 
 console.log("Páginas estáticas geradas com sucesso.");

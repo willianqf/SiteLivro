@@ -20,13 +20,16 @@ const linkContextName = (link) =>
 
 const setMenuState = (isOpen) => {
   menuButton?.setAttribute("aria-expanded", String(isOpen));
+  menuButton?.setAttribute("aria-label", isOpen ? "Fechar menu" : "Abrir menu");
   navigation?.classList.toggle("is-open", isOpen);
+  if (navigation) navigation.inert = window.innerWidth <= 980 && !isOpen;
   document.body.style.overflow = isOpen ? "hidden" : "";
 };
 
 menuButton?.addEventListener("click", () => {
   const isOpen = menuButton.getAttribute("aria-expanded") !== "true";
   setMenuState(isOpen);
+  if (isOpen) window.requestAnimationFrame(() => navigation?.querySelector("a[href]")?.focus());
 });
 
 navigation?.querySelectorAll("a").forEach((link) => {
@@ -35,7 +38,32 @@ navigation?.querySelectorAll("a").forEach((link) => {
 
 window.addEventListener("resize", () => {
   if (window.innerWidth > 980) setMenuState(false);
+  else if (navigation) navigation.inert = menuButton?.getAttribute("aria-expanded") !== "true";
 });
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && menuButton?.getAttribute("aria-expanded") === "true") {
+    setMenuState(false);
+    menuButton.focus();
+    return;
+  }
+
+  if (event.key !== "Tab" || menuButton?.getAttribute("aria-expanded") !== "true") return;
+  const focusable = [...navigation.querySelectorAll("a[href], button:not([disabled])")];
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable.at(-1);
+
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+});
+
+setMenuState(false);
 
 const updateHeader = () => {
   header?.classList.toggle("is-scrolled", window.scrollY > 30);
@@ -233,9 +261,10 @@ document.addEventListener("click", (event) => {
   const linkUrl = url.href;
   const label = linkContextName(link);
 
-  if (url.hostname.includes("uiclap.com")) {
+  if (url.hostname.includes("uiclap.com") || url.hostname.includes("amazon.com.br")) {
     trackEvent("purchase_click", {
       book: label,
+      store: url.hostname.includes("amazon.com.br") ? "amazon" : "uiclap",
       link_url: linkUrl,
     });
     return;
@@ -320,4 +349,41 @@ lightbox?.addEventListener("click", (event) => {
   if (isOutside) lightbox.close();
 });
 
-document.querySelector("[data-year]").textContent = new Date().getFullYear();
+document.querySelectorAll("[data-spotify-embed]").forEach((shell) => {
+  const button = shell.querySelector("[data-spotify-load], .spotify-load-button");
+  button?.addEventListener("click", () => {
+    const iframe = document.createElement("iframe");
+    iframe.className = "spotify-player";
+    iframe.src = shell.dataset.spotifySrc;
+    iframe.title = shell.dataset.spotifyTitle || "Player do Spotify";
+    iframe.width = "100%";
+    iframe.height = "352";
+    iframe.loading = "lazy";
+    iframe.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
+    shell.replaceChildren(iframe);
+    trackEvent("spotify_embed_load", { title: iframe.title });
+  });
+});
+
+const deferredBackgrounds = document.querySelectorAll("[data-bg-image]");
+const loadBackground = (element) => {
+  const suffix = window.innerWidth <= 700 ? "-640.webp" : "-960.webp";
+  element.style.backgroundImage = `url("${element.dataset.bgImage}${suffix}")`;
+  element.removeAttribute("data-bg-image");
+};
+
+if ("IntersectionObserver" in window) {
+  const backgroundObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      loadBackground(entry.target);
+      observer.unobserve(entry.target);
+    });
+  }, { rootMargin: "300px 0px" });
+  deferredBackgrounds.forEach((element) => backgroundObserver.observe(element));
+} else {
+  deferredBackgrounds.forEach(loadBackground);
+}
+
+const year = document.querySelector("[data-year]");
+if (year) year.textContent = new Date().getFullYear();

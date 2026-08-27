@@ -1,0 +1,31 @@
+name: Validar site
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Regenerar páginas
+        run: node tools/build-pages.mjs
+      - name: Confirmar páginas atualizadas
+        run: git diff --exit-code
+      - name: Verificar JavaScript
+        run: |
+          node --check assets/script.js
+          node --check assets/consent.js
+          node --check assets/reader.js
+          node --check assets/preview-data.js
+          node --check tools/build-pages.mjs
+          node --check tools/check-site.mjs
+      - name: Validar site
+        run: node tools/check-site.mjs

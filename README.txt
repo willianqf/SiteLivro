@@ -15,9 +15,11 @@ Arquivos principais:
 - veter/: página e prévia indexável do livro.
 - autor/: página dedicada ao autor.
 - trilhas/: página dedicada às trilhas sonoras.
+- privacidade/: política e gerenciamento de consentimento.
 - sitemap.xml e robots.txt: arquivos de descoberta para buscadores.
 - tools/build-pages.mjs: gera novamente as páginas internas a partir dos
   dados de assets/preview-data.js.
+- tools/check-site.mjs: valida HTML, links locais, JSON-LD e privacidade.
 
 SEO E DESEMPENHO
 ----------------
@@ -29,14 +31,28 @@ SEO E DESEMPENHO
 - As imagens exibidas utilizam WebP e as galerias possuem versões
   responsivas de 640 e 960 pixels.
 - Os JPG originais foram mantidos para compatibilidade e compartilhamento.
+- Google Analytics e AdSense só são carregados depois do consentimento.
+- Players do Spotify só são carregados depois de um clique do visitante.
 
 Links de compra utilizados:
 - A Terra dos Monstros:
   https://loja.uiclap.com/titulo/ua145914
+  https://www.amazon.com.br/dp/B0H4BVMK8Z
 - As Histórias de Mentel: Elemental:
   https://loja.uiclap.com/titulo/ua151952
+  https://www.amazon.com.br/dp/B0HG5VPLBY
 - Veter:
   https://loja.uiclap.com/titulo/ua152387
+  https://www.amazon.com.br/dp/B0HG62QBZC
+
+As edições impressas são ilustradas e incluem páginas bônus. As edições
+Kindle não incluem ilustrações nem páginas bônus. Preço, produção e entrega
+do impresso são informados pela UICLAP; preço e disponibilidade do eBook são
+informados pela Amazon.
+
+Observação editorial: as páginas públicas consultadas na UICLAP em
+27/08/2026 não expunham ISBN. O campo não foi inventado e deve ser incluído
+somente após confirmação oficial de cada número.
 
 Perfil do autor:
 https://loja.uiclap.com/pessoa/willianquirino

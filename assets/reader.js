@@ -209,7 +209,7 @@ const renderSpecialPage = (page, target) => {
         <a href="${book.buyUrl}" target="_blank" rel="noopener noreferrer">
           Adquirir o livro na UICLAP <span aria-hidden="true">↗</span>
         </a>
-        <a class="reader-site-return" href="${siteReturnUrl}">Voltar ao livro</a>
+        <a class="reader-site-return" href="${siteReturnUrl.replace(/#.*$/, "")}#edicoes">Comparar edição impressa e Kindle</a>
       </div>
     </div>
   `;
