@@ -2,6 +2,7 @@ const header = document.querySelector("[data-header]");
 const menuButton = document.querySelector("[data-menu-toggle]");
 const navigation = document.querySelector("[data-nav]");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const isEnglish = document.documentElement.lang.toLowerCase().startsWith("en");
 
 const trackEvent = (eventName, parameters = {}) => {
   if (typeof window.gtag !== "function") return;
@@ -20,7 +21,9 @@ const linkContextName = (link) =>
 
 const setMenuState = (isOpen) => {
   menuButton?.setAttribute("aria-expanded", String(isOpen));
-  menuButton?.setAttribute("aria-label", isOpen ? "Fechar menu" : "Abrir menu");
+  menuButton?.setAttribute("aria-label", isOpen
+    ? (isEnglish ? "Close menu" : "Fechar menu")
+    : (isEnglish ? "Open menu" : "Abrir menu"));
   navigation?.classList.toggle("is-open", isOpen);
   if (navigation) navigation.inert = window.innerWidth <= 980 && !isOpen;
   document.body.style.overflow = isOpen ? "hidden" : "";

@@ -30,10 +30,27 @@ for (const file of htmlFiles) {
   const html = fs.readFileSync(file, "utf8");
   const isRedirect = /http-equiv=["']refresh["']/i.test(html);
   const isNoIndex = /<meta[^>]+name=["']robots["'][^>]+noindex/i.test(html);
+  const isEnglishPage = relative(file).startsWith("en/");
   const h1Count = (html.match(/<h1\b/gi) || []).length;
 
   if (!isRedirect && !isNoIndex && path.basename(file) !== "404.html" && h1Count !== 1) {
     report(file, `esperado 1 <h1>, encontrado ${h1Count}`);
+  }
+
+  if (!isRedirect && !isNoIndex && path.basename(file) !== "404.html") {
+    if (!html.includes('class="language-switcher"') && !relative(file).includes("/previa/")) {
+      report(file, "seletor de idioma ausente");
+    }
+    if (!html.includes('hreflang="pt-BR"') || !html.includes('hreflang="en"')) {
+      report(file, "metadados hreflang incompletos");
+    }
+  }
+
+  if (isEnglishPage) {
+    if (!/<html\s+lang=["']en["']/i.test(html)) report(file, "página inglesa sem lang=en");
+    for (const phrase of ["Pular para o conteúdo", "Navegação principal", "Loja UICLAP", "Escolha sua edição", "Privacidade e cookies"]) {
+      if (html.includes(phrase)) report(file, `texto português residual: ${phrase}`);
+    }
   }
 
   const ids = [...html.matchAll(/\sid=["']([^"']+)["']/gi)].map((match) => match[1]);
@@ -73,7 +90,7 @@ for (const required of ["B0H4BVMK8Z", "B0HG5VPLBY", "B0HG62QBZC", "privacidade/"
 }
 
 const sitemap = fs.readFileSync(path.join(root, "sitemap.xml"), "utf8");
-for (const route of ["a-terra-dos-monstros/", "elemental/", "veter/", "trilhas/", "autor/", "privacidade/"]) {
+for (const route of ["a-terra-dos-monstros/", "elemental/", "veter/", "trilhas/", "autor/", "privacidade/", "en/", "en/a-terra-dos-monstros/", "en/elemental/", "en/veter/", "en/soundtracks/", "en/author/", "en/privacy/"]) {
   if (!sitemap.includes(`https://willianquirino.com.br/${route}`)) {
     report(path.join(root, "sitemap.xml"), `rota ausente: ${route}`);
   }

@@ -14,6 +14,14 @@ const previews = context.window.BOOK_PREVIEWS;
 
 const amazonAuthor = "https://www.amazon.com.br/stores/Willian-Quirino/author/B0HGM36S9W";
 const catalogUpdated = "2026-08-27";
+const englishSlug = (slug) => ({ autor: "author", trilhas: "soundtracks", privacidade: "privacy" })[slug] || slug;
+const englishCanonicalFor = (canonical) => {
+  const url = new URL(canonical);
+  const parts = url.pathname.split("/").filter(Boolean);
+  if (parts.at(-1) === "previa") parts.pop();
+  if (parts.length) parts[0] = englishSlug(parts[0]);
+  return `${domain}/en/${parts.join("/")}${parts.length ? "/" : ""}`;
+};
 
 const books = {
   terra: {
@@ -234,13 +242,16 @@ const responsiveImage = (file, alt) => {
 const jsonLd = (data) =>
   `<script type="application/ld+json">${JSON.stringify(data)}</script>`;
 
-const head = ({ title, description, canonical, image, structuredData, css = "../assets/styles.css?v=20260827-2", favicon = "../assets/favicon.svg", assetPrefix = "../" }) => `
+const head = ({ title, description, canonical, image, structuredData, css = "../assets/styles.css?v=20260831-1", favicon = "../assets/favicon.svg", assetPrefix = "../" }) => `
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="${escapeHtml(description)}">
   <meta name="theme-color" content="#071014">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="${canonical}">
+  <link rel="alternate" hreflang="pt-BR" href="${canonical}">
+  <link rel="alternate" hreflang="en" href="${englishCanonicalFor(canonical)}">
+  <link rel="alternate" hreflang="x-default" href="${canonical}">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
   <meta property="og:site_name" content="Willian Quirino">
@@ -258,15 +269,19 @@ const head = ({ title, description, canonical, image, structuredData, css = "../
   <link rel="icon" href="${favicon}" type="image/svg+xml">
   <link rel="stylesheet" href="${css}">
   <link rel="stylesheet" href="${assetPrefix}assets/consent.css?v=20260827-1">
-  <script defer src="${assetPrefix}assets/consent.js?v=20260827-1"></script>
+  <script defer src="${assetPrefix}assets/consent.js?v=20260831-1"></script>
+  <script defer src="${assetPrefix}assets/language.js?v=20260831-1"></script>
 ${structuredData.map((data) => `  ${jsonLd(data)}`).join("\n")}`;
 
-const header = (prefix = "../") => `
+const header = (prefix = "../", englishHref = `${prefix}en/`) => `
   <header class="site-header is-scrolled page-header" data-header>
     <a class="brand" href="${prefix}" aria-label="Willian Quirino, início">
       <span class="brand-mark" aria-hidden="true">WQ</span>
       <span class="brand-copy"><strong>Willian Quirino</strong><small>Autor</small></span>
     </a>
+    <nav class="language-switcher" aria-label="Idioma">
+      <a href="./" lang="pt-BR" hreflang="pt-BR" data-language-link="pt" aria-current="page">PT</a><span aria-hidden="true">/</span><a href="${englishHref}" lang="en" hreflang="en" data-language-link="en">EN</a>
+    </nav>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle>
       <span></span><span></span><span></span><span class="sr-only">Abrir menu</span>
     </button>
@@ -301,7 +316,7 @@ const footer = (prefix = "../") => `
       <p class="copyright">© <span data-year></span> Willian Quirino.</p>
     </div>
   </footer>
-  <script src="${prefix}assets/script.js?v=20260827-2"></script>`;
+  <script src="${prefix}assets/script.js?v=20260831-1"></script>`;
 
 const breadcrumbs = (items) => jsonLd({
   "@context": "https://schema.org",
@@ -448,7 +463,7 @@ ${head({
 </head>
 <body class="detail-page detail-${book.accent}">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-${header()}
+${header("../", `../en/${book.slug}/`)}
   <main id="conteudo">
     <section class="detail-hero" id="visao-geral">
       <picture class="detail-hero-art" aria-hidden="true">
@@ -668,7 +683,7 @@ ${head({ title, description, canonical, image, structuredData })}
 </head>
 <body class="detail-page">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-${header()}
+${header("../", `../en/${englishSlug(slug)}/`)}
   <main id="conteudo">${body}</main>
 ${footer()}
 ${breadcrumbs([{ name: "Início", url: `${domain}/` }, { name: title.split(" | ")[0], url: canonical }])}
@@ -703,7 +718,7 @@ const authorPage = simplePage({
           <p>Willian Quirino escreve fantasia e ficção científica atravessadas por conflitos, memórias, sobrevivência e transformação. Sua trajetória começou ainda na infância, antes que ele compreendesse completamente a dimensão dos mundos que estava criando.</p>
           <p>Os primeiros registros de <em>Elemental</em> foram escritos à mão em um diário de 2006, quando Willian tinha por volta de dez anos. Em outro diário, de 2008, surgiram os manuscritos de <em>Veter</em>.</p>
           <p>Depois de sofrer um derrame em 2012, grande parte das memórias anteriores àquele período se tornou fragmentada. Em 2013, antigos cadernos guardados revelaram histórias ainda inacabadas e abriram um caminho para reencontrar aquilo que havia sido criado.</p>
-          <div class="feature-actions"><a class="button button-primary" href="../#livros">Conhecer os livros</a><a class="button button-ghost" href="../trilhas/">Ouvir as trilhas</a></div>
+          <div class="feature-actions"><a class="button button-primary" href="../#comecar">Conhecer os livros</a><a class="button button-ghost" href="../trilhas/">Ouvir as trilhas</a></div>
         </div>
       </div>
     </section>

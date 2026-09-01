@@ -16,9 +16,13 @@ Arquivos principais:
 - autor/: página dedicada ao autor.
 - trilhas/: página dedicada às trilhas sonoras.
 - privacidade/: política e gerenciamento de consentimento.
+- en/: versão inglesa do site, com páginas de livros, autor, músicas e
+  privacidade. As prévias literárias permanecem em português.
 - sitemap.xml e robots.txt: arquivos de descoberta para buscadores.
 - tools/build-pages.mjs: gera novamente as páginas internas a partir dos
   dados de assets/preview-data.js.
+- tools/build-english.mjs: gera as páginas inglesas a partir das páginas
+  portuguesas já atualizadas.
 - tools/check-site.mjs: valida HTML, links locais, JSON-LD e privacidade.
 
 SEO E DESEMPENHO
@@ -34,6 +38,10 @@ SEO E DESEMPENHO
 - Google Analytics e AdSense só são carregados depois do consentimento.
 - Players do Spotify usam carregamento adiado e aparecem automaticamente
   quando se aproximam da área visível.
+- O seletor PT/EN fica no cabeçalho. Na página inicial, assets/language.js
+  usa o idioma preferido do navegador e respeita a escolha manual salva.
+- As edições comercializadas continuam em português; a versão inglesa do
+  site informa isso sem sugerir que exista tradução dos livros.
 
 Links de compra utilizados:
 - A Terra dos Monstros:
