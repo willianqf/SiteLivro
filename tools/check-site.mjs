@@ -44,6 +44,15 @@ for (const file of htmlFiles) {
     if (!html.includes('hreflang="pt-BR"') || !html.includes('hreflang="en"')) {
       report(file, "metadados hreflang incompletos");
     }
+    if (!html.includes('<meta name="google-adsense-account" content="ca-pub-1620158714396057">')) {
+      report(file, "metatag da conta do AdSense ausente");
+    }
+    if (!html.includes('src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1620158714396057"')) {
+      report(file, "snippet de verificação do AdSense ausente");
+    }
+    if (!html.includes('window.gtag("consent", "default"')) {
+      report(file, "consentimento padrão do Google ausente");
+    }
   }
 
   if (isEnglishPage) {
@@ -78,8 +87,14 @@ for (const file of htmlFiles) {
     }
   }
 
-  if (/src=["'][^"']*(?:googletagmanager\.com|googlesyndication\.com)/i.test(html)) {
-    report(file, "script de rastreamento carregado diretamente no HTML");
+  if (/src=["'][^"']*googletagmanager\.com/i.test(html)) {
+    report(file, "Google Tag Manager carregado diretamente no HTML");
+  }
+
+  for (const match of html.matchAll(/<script\b[^>]*src=["']([^"']*googlesyndication\.com[^"']*)["'][^>]*>/gi)) {
+    if (match[1] !== "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1620158714396057") {
+      report(file, `script do AdSense inesperado: ${match[1]}`);
+    }
   }
 
 }
@@ -94,6 +109,11 @@ for (const route of ["a-terra-dos-monstros/", "elemental/", "veter/", "trilhas/"
   if (!sitemap.includes(`https://willianquirino.com.br/${route}`)) {
     report(path.join(root, "sitemap.xml"), `rota ausente: ${route}`);
   }
+}
+
+const adsTxt = fs.readFileSync(path.join(root, "ads.txt"), "utf8").trim();
+if (adsTxt !== "google.com, pub-1620158714396057, DIRECT, f08c47fec0942fa0") {
+  report(path.join(root, "ads.txt"), "registro do editor do AdSense inválido");
 }
 
 if (errors.length) {

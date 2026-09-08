@@ -248,6 +248,19 @@ const head = ({ title, description, canonical, image, structuredData, css = "../
   <meta name="description" content="${escapeHtml(description)}">
   <meta name="theme-color" content="#071014">
   <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="google-adsense-account" content="ca-pub-1620158714396057">
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function gtag() { window.dataLayer.push(arguments); };
+    window.gtag("consent", "default", {
+      ad_storage: "denied",
+      analytics_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+      wait_for_update: 500,
+    });
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1620158714396057" crossorigin="anonymous"></script>
   <link rel="canonical" href="${canonical}">
   <link rel="alternate" hreflang="pt-BR" href="${canonical}">
   <link rel="alternate" hreflang="en" href="${englishCanonicalFor(canonical)}">
@@ -269,7 +282,7 @@ const head = ({ title, description, canonical, image, structuredData, css = "../
   <link rel="icon" href="${favicon}" type="image/svg+xml">
   <link rel="stylesheet" href="${css}">
   <link rel="stylesheet" href="${assetPrefix}assets/consent.css?v=20260827-1">
-  <script defer src="${assetPrefix}assets/consent.js?v=20260831-1"></script>
+  <script defer src="${assetPrefix}assets/consent.js?v=20260908-1"></script>
   <script defer src="${assetPrefix}assets/language.js?v=20260831-1"></script>
 ${structuredData.map((data) => `  ${jsonLd(data)}`).join("\n")}`;
 
@@ -771,13 +784,13 @@ const privacyPage = simplePage({
   body: `
     <section class="page-hero privacy-hero section"><div class="container"><p class="eyebrow">Transparência</p><h1>Privacidade e cookies</h1><p>Você escolhe quais recursos não essenciais podem ser carregados durante a visita.</p></div></section>
     <section class="section privacy-content"><div class="container legal-copy">
-      <p class="legal-updated">Última atualização: 27 de agosto de 2026.</p>
+      <p class="legal-updated">Última atualização: 8 de setembro de 2026.</p>
       <h2>O que este site coleta</h2>
       <p>O site pode utilizar dados técnicos de navegação para entender visitas, melhorar páginas e medir cliques em prévias, músicas e lojas. Esses recursos permanecem desativados até que você faça uma escolha no aviso de cookies.</p>
       <h2>Categorias utilizadas</h2>
       <h3>Necessários</h3><p>Guardam localmente sua preferência de privacidade e permitem o funcionamento básico do site. Não podem ser desativados.</p>
       <h3>Analíticos</h3><p>Quando autorizados, o Google Analytics ajuda a medir páginas visitadas e interações de forma agregada.</p>
-      <h3>Publicidade</h3><p>Quando autorizados, Google Ads e Google AdSense podem medir campanhas e oferecer publicidade. Esses serviços podem tratar identificadores e dados técnicos conforme suas próprias políticas.</p>
+      <h3>Publicidade</h3><p>O código-base do Google AdSense é carregado para verificar o domínio e preparar a exibição de anúncios com o consentimento negado por padrão. O armazenamento publicitário, a personalização e a medição de campanhas só são autorizados após sua escolha. Esses serviços podem tratar identificadores e dados técnicos conforme suas próprias políticas.</p>
       <h3>Conteúdo externo</h3><p>Os players incorporados do Spotify são carregados automaticamente quando se aproximam da área visível da página. O Spotify pode tratar dados técnicos conforme sua própria política. Links para Amazon, UICLAP e plataformas musicais também abrem serviços de terceiros.</p>
       <h2>Como mudar sua escolha</h2><p>Use o botão abaixo ou o link “Cookies” no rodapé. A nova preferência passa a valer imediatamente; para interromper recursos já carregados, recarregue a página.</p>
       <p><button class="button button-primary" type="button" data-cookie-settings>Gerenciar cookies</button></p>

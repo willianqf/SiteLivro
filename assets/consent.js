@@ -81,7 +81,7 @@
     window.dataLayer = window.dataLayer || [];
     window.gtag = window.gtag || function gtag() { window.dataLayer.push(arguments); };
 
-    window.gtag("consent", googleLoaded ? "update" : "default", {
+    window.gtag("consent", "update", {
       analytics_storage: choice.analytics ? "granted" : "denied",
       ad_storage: choice.marketing ? "granted" : "denied",
       ad_user_data: choice.marketing ? "granted" : "denied",
